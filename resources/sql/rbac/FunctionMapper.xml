@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.credit.rbac.dao.FunctionMapper">
+	<!-- Function -->
+	<resultMap type="Function" id="functionResultMap">
+		<id property="id" column="functionid" />
+		<result property="name" column="name" />
+		<result property="uri" column="uri" />
+		<result property="parent" column="parent" />
+		<result property="description" column="description" />
+		<result property="isOpera" column="isOperation" />
+		<result property="comp" column="comp" />
+		<result property="functionOrder" column="functionOrder" />
+		<association property="operation" column="code" javaType="Operation"
+			resultMap="operationResultMap"></association>
+	</resultMap>
+
+	<!-- Operation 关联 -->
+	<resultMap type="Operation" id="operationResultMap">
+		<id property="code" column="code" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<!-- 根据角色ID获得功能列表 -->
+	<select id="getByRole" parameterType="String" resultMap="functionResultMap">
+		SELECT
+		f.*, o.name oName,rf.comp FROM rbac_sys_function f LEFT JOIN
+		rbac_sys_operation o ON f.code = o.code LEFT JOIN
+		rbac_sys_role_function rf ON f.functionid = rf.functionid WHERE
+		rf.roleid = #{roleid}
+	</select>
+	<!-- 获得操作类型列表 -->
+	<select id="getOperations" resultMap="operationResultMap">
+		select * from
+		rbac_sys_operation
+	</select>
+	<!-- 获得所有的功能列表 -->
+	<select id="list" resultMap="functionResultMap">
+		SELECT f.*, o.name oName,rf.comp
+		FROM
+		rbac_sys_function f LEFT JOIN rbac_sys_operation o ON f.code =
+		o.code
+		LEFT JOIN rbac_sys_role_function rf ON f.functionid =
+		rf.functionid
+		group by f.functionid
+	</select>
+	<!-- 根据功能ID获得功能的信息 -->
+	<select id="getByID" resultMap="functionResultMap">
+		SELECT f.*, o.name oName FROM
+		rbac_sys_function f LEFT JOIN rbac_sys_operation o ON f.code=o.code
+		WHERE f.functionid=#{id}
+	</select>
+	<!-- 根据功能ID获得功能的信息 -->
+	<select id="getChildren" resultMap="functionResultMap">
+		SELECT f.*, o.name oName FROM
+		rbac_sys_function f LEFT JOIN rbac_sys_operation o ON f.code=o.code
+		WHERE f.parent=#{id}
+	</select>
+	
+	<!-- 添加功能 -->
+	<insert id="add" parameterType="Function">
+		insert into rbac_sys_function
+		(functionid,name,parent,uri,description,isOperation,code,functionOrder)
+		values(
+		#{id},#{name},#{parent},#{uri},#{description},#{isOpera},#{operation.code},functionOrder=#{functionOrder}
+		)
+	</insert>
+	
+	<!-- 修改功能 -->
+	<update id="update" parameterType="Function" >
+		update rbac_sys_function set
+		name=#{name},parent=#{parent},description=#{description},uri=#{uri},isOperation=#{isOpera},code=#{operation.code},functionOrder=#{functionOrder}
+		where functionid=#{id}
+	</update>
+	
+	<!-- 删除功能 -->
+	<delete id="delete" parameterType="java.util.List">
+		delete from rbac_sys_function where functionid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 删除功能-角色的关联 -->
+	<delete id="deleteRoleFunction" parameterType="java.util.List">
+		delete from rbac_sys_role_function where functionid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+</mapper>

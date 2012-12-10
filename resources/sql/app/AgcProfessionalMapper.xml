@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.credit.mapper.rate.AgcProfessionalMapper">
+	<insert id="insert" parameterType="com.credit.model.rate.AgcProfessional">
+		insert into agc_professional
+		(agcProId, agcId, agcProName,
+		agcProIDType, agcProIDNum, agcProGender,
+		agcProBirthday, agcProHighestEdu, agcProWorkingLife,
+		agcProCertiType,
+		agcProCertiNum, agcProCertiGrantAuth,
+		agcProCertiObtDate,
+		agcProCertiStatus, agcProOtherCertis,
+		agcProRewdPunish,
+		agcProResume,agcCnName)
+		values (#{agcProId,jdbcType=VARCHAR},
+		#{agcId,jdbcType=VARCHAR},
+		#{agcProName,jdbcType=VARCHAR},
+		#{agcProIDType,jdbcType=INTEGER},
+		#{agcProIDNum,jdbcType=VARCHAR},
+		#{agcProGender,jdbcType=INTEGER},
+		#{agcProBirthday,jdbcType=DATE},
+		#{agcProHighestEdu,jdbcType=INTEGER},
+		#{agcProWorkingLife,jdbcType=INTEGER},
+		#{agcProCertiType,jdbcType=INTEGER},
+		#{agcProCertiNum,jdbcType=VARCHAR},
+		#{agcProCertiGrantAuth,jdbcType=VARCHAR},
+		#{agcProCertiObtDate,jdbcType=DATE},
+		#{agcProCertiStatus,jdbcType=INTEGER},
+		#{agcProOtherCertis,jdbcType=DATE},
+		#{agcProRewdPunish,jdbcType=VARCHAR},
+		#{agcProResume,jdbcType=VARCHAR},
+		#{agcCnName,jdbcType=VARCHAR})
+	</insert>
+	<delete id="deleteAgcProfessionals" parameterType="java.lang.Integer">
+		delete from
+		agc_professional
+		where agcProId in
+		<foreach collection="list" item="agcProfessionalIds" open="("
+			separator="," close=")">
+			#{agcProfessionalIds}
+		</foreach>
+	</delete>
+	<update id="updateAgcProfessional" parameterType="com.credit.model.rate.AgcProfessional">
+		update
+		agc_professional
+		set agcId = #{agcId,jdbcType=VARCHAR},
+		agcProName =
+		#{agcProName,jdbcType=VARCHAR},
+		agcProIDType =
+		#{agcProIDType,jdbcType=INTEGER},
+		agcProIDNum =
+		#{agcProIDNum,jdbcType=VARCHAR},
+		agcProGender =
+		#{agcProGender,jdbcType=INTEGER},
+		agcProBirthday =
+		#{agcProBirthday,jdbcType=DATE},
+		agcProHighestEdu =
+		#{agcProHighestEdu,jdbcType=INTEGER},
+		agcProWorkingLife =
+		#{agcProWorkingLife,jdbcType=INTEGER},
+		agcProCertiType =
+		#{agcProCertiType,jdbcType=INTEGER},
+		agcProCertiNum =
+		#{agcProCertiNum,jdbcType=VARCHAR},
+		agcProCertiGrantAuth =
+		#{agcProCertiGrantAuth,jdbcType=VARCHAR},
+		agcProCertiObtDate =
+		#{agcProCertiObtDate,jdbcType=DATE},
+		agcProCertiStatus =
+		#{agcProCertiStatus,jdbcType=INTEGER},
+		agcProOtherCertis =
+		#{agcProOtherCertis,jdbcType=DATE},
+		agcProRewdPunish =
+		#{agcProRewdPunish,jdbcType=VARCHAR},
+		agcProResume =
+		#{agcProResume,jdbcType=VARCHAR},
+		agcCnName =
+		#{agcCnName,jdbcType=VARCHAR}
+		where agcProId =
+		#{agcProId,jdbcType=VARCHAR}
+	</update>
+	<resultMap id="BaseResultMap" type="com.credit.model.rate.AgcProfessional" />
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select agcProId, agcId, agcProName, agcProIDType,
+		agcProIDNum,
+		agcProGender, agcProBirthday,
+		agcProHighestEdu,
+		agcProWorkingLife,
+		agcProCertiType, agcProCertiNum,
+		agcProCertiGrantAuth,
+		agcProCertiObtDate, agcProCertiStatus,
+		agcProOtherCertis,
+		agcProRewdPunish, agcProResume,agcCnName
+		from
+		agc_professional
+		where agcProId =
+		#{agcProId,jdbcType=VARCHAR}
+	</select>
+	<resultMap type="com.credit.model.rate.ListAgcProfessional"
+		id="ListAgcProfessionalMap" />
+	<select id="searchLimit" resultMap="ListAgcProfessionalMap">
+		select
+		agcCnName,agcProId,agcProName,agcId,agcProIDNum,agcProCertiType,agcProCertiStatus
+		from
+		agc_professional
+		where
+		1=1
+		<if test="agcCnName !=null ">
+			and agcCnName LIKE CONCAT(CONCAT('%', #{agcCnName}),'%')
+		</if>
+		<if test="agcProName !=null ">
+			and agcProName LIKE CONCAT(CONCAT('%', #{agcProName}),'%')
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		order by agcId
+	</select>
+	<resultMap type="java.lang.Integer" id="allCount" />
+	<select id="allCount" resultMap="allCount">
+		select
+		count(agcProId)
+		from
+		agc_professional
+		where
+		1=1
+		<if test="agcCnName !=null ">
+			and agcCnName LIKE CONCAT(CONCAT('%', #{agcCnName}),'%')
+		</if>
+		<if test="agcProName !=null ">
+			and agcProName LIKE CONCAT(CONCAT('%', #{agcProName}),'%')
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+	</select>
+</mapper>

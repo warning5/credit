@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.credit.mapper.rate.AgcBaseMapper">
+	<resultMap id="BaseResultMap" type="com.credit.model.rate.AgcBase">
+		<id column="agcId" property="agcId" jdbcType="VARCHAR" />
+		<result column="agcOrgId" property="agcOrgId" jdbcType="VARCHAR" />
+		<result column="agcCnName" property="agcCnName" jdbcType="VARCHAR" />
+		<result column="agcEnName" property="agcEnName" jdbcType="VARCHAR" />
+		<result column="agcNature" property="agcNature" jdbcType="INTEGER" />
+		<result column="agcFoundingDate" property="agcFoundingDate"
+			jdbcType="DATE" />
+		<result column="agcRegisType" property="agcRegisType" jdbcType="INTEGER" />
+		<result column="agcRagisNum" property="agcRagisNum" jdbcType="VARCHAR" />
+		<result column="agcRagisDate" property="agcRagisDate" jdbcType="DATE" />
+		<result column="agcBizLicsExpDate" property="agcBizLicsExpDate"
+			jdbcType="DATE" />
+		<result column="agcRegisAddr" property="agcRegisAddr" jdbcType="VARCHAR" />
+		<result column="agcMunicpPrv" property="agcMunicpPrv" jdbcType="INTEGER" />
+		<result column="agcMunicpCity" property="agcMunicpCity"
+			jdbcType="INTEGER" />
+		<result column="agcMunicpDistr" property="agcMunicpDistr"
+			jdbcType="INTEGER" />
+		<result column="agcAbrdInvstRegisNum" property="agcAbrdInvstRegisNum"
+			jdbcType="VARCHAR" />
+		<result column="agcNTaxCertiNum" property="agcNTaxCertiNum"
+			jdbcType="VARCHAR" />
+		<result column="agcLTaxCertiNum" property="agcLTaxCertiNum"
+			jdbcType="VARCHAR" />
+		<result column="agcLoanCardCode" property="agcLoanCardCode"
+			jdbcType="VARCHAR" />
+		<result column="agcDefaultRateCode" property="agcDefaultRateCode"
+			jdbcType="BIGINT" />
+		<result column="agcLegleRepr" property="agcLegleRepr" jdbcType="VARCHAR" />
+		<result column="agcLegleReprIDType" property="agcLegleReprIDType"
+			jdbcType="INTEGER" />
+		<result column="agcLegleReprIDNum" property="agcLegleReprIDNum"
+			jdbcType="VARCHAR" />
+		<result column="agcQualification" property="agcQualification"
+			jdbcType="VARCHAR" />
+		<result column="agcBizScope" property="agcBizScope" jdbcType="INTEGER" />
+		<result column="agcContactName" property="agcContactName"
+			jdbcType="VARCHAR" />
+		<result column="agcContactNumber" property="agcContactNumber"
+			jdbcType="VARCHAR" />
+		<result column="agcFax" property="agcFax" jdbcType="VARCHAR" />
+		<result column="agcHQAddress" property="agcHQAddress" jdbcType="VARCHAR" />
+		<result column="agcHQCode" property="agcHQCode" jdbcType="INTEGER" />
+		<result column="agcPostalAddr" property="agcPostalAddr"
+			jdbcType="VARCHAR" />
+		<result column="agcEmail" property="agcEmail" jdbcType="VARCHAR" />
+		<result column="agcWebsite" property="agcWebsite" jdbcType="VARCHAR" />
+		<result column="agcListedLoacation" property="agcListedLoacation"
+			jdbcType="CHAR" />
+		<result column="agcRegisCapital" property="agcRegisCapital"
+			jdbcType="DOUBLE" />
+		<result column="agcBizArea" property="agcBizArea" jdbcType="DOUBLE" />
+		<result column="agcCrewSize" property="agcCrewSize" jdbcType="INTEGER" />
+		<result column="agcRatingProfes" property="agcRatingProfes"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<delete id="deleteAgcs" parameterType="java.lang.Integer">
+		delete from
+		agc_base_info
+		where agcId in
+		<foreach collection="list" item="agcs" open="(" separator=","
+			close=")">
+			#{agcs}
+		</foreach>
+	</delete>
+	<insert id="insert" parameterType="com.credit.model.rate.AgcBase">
+		insert into agc_base_info
+		(agcId, agcOrgId, agcCnName,
+		agcEnName, agcNature, agcFoundingDate,
+		agcRegisType, agcRagisNum, agcRagisDate,
+		agcBizLicsExpDate,
+		agcRegisAddr, agcMunicpPrv,
+		agcMunicpCity, agcMunicpDistr,
+		agcAbrdInvstRegisNum,
+		agcNTaxCertiNum, agcLTaxCertiNum,
+		agcLoanCardCode,
+		agcDefaultRateCode, agcLegleRepr, agcLegleReprIDType,
+		agcLegleReprIDNum, agcQualification, agcBizScope,
+		agcContactName,
+		agcContactNumber, agcFax,
+		agcHQAddress, agcHQCode, agcPostalAddr,
+		agcEmail, agcWebsite, agcListedLoacation,
+		agcRegisCapital, agcBizArea,
+		agcCrewSize,
+		agcRatingProfes)
+		values (#{agcId,jdbcType=VARCHAR},
+		#{agcOrgId,jdbcType=VARCHAR},
+		#{agcCnName,jdbcType=VARCHAR},
+		#{agcEnName,jdbcType=VARCHAR}, #{agcNature,jdbcType=INTEGER},
+		#{agcFoundingDate,jdbcType=DATE},
+		#{agcRegisType,jdbcType=INTEGER},
+		#{agcRagisNum,jdbcType=VARCHAR},
+		#{agcRagisDate,jdbcType=DATE},
+		#{agcBizLicsExpDate,jdbcType=DATE}, #{agcRegisAddr,jdbcType=VARCHAR},
+		#{agcMunicpPrv,jdbcType=INTEGER},
+		#{agcMunicpCity,jdbcType=INTEGER},
+		#{agcMunicpDistr,jdbcType=INTEGER},
+		#{agcAbrdInvstRegisNum,jdbcType=VARCHAR},
+		#{agcNTaxCertiNum,jdbcType=VARCHAR},
+		#{agcLTaxCertiNum,jdbcType=VARCHAR},
+		#{agcLoanCardCode,jdbcType=VARCHAR},
+		#{agcDefaultRateCode,jdbcType=BIGINT},
+		#{agcLegleRepr,jdbcType=VARCHAR},
+		#{agcLegleReprIDType,jdbcType=INTEGER},
+		#{agcLegleReprIDNum,jdbcType=VARCHAR},
+		#{agcQualification,jdbcType=VARCHAR}, #{agcBizScope,jdbcType=VARCHAR},
+		#{agcContactName,jdbcType=VARCHAR},
+		#{agcContactNumber,jdbcType=VARCHAR}, #{agcFax,jdbcType=VARCHAR},
+		#{agcHQAddress,jdbcType=VARCHAR}, #{agcHQCode,jdbcType=INTEGER},
+		#{agcPostalAddr,jdbcType=VARCHAR},
+		#{agcEmail,jdbcType=VARCHAR},
+		#{agcWebsite,jdbcType=VARCHAR}, #{agcListedLoacation,jdbcType=CHAR},
+		#{agcRegisCapital,jdbcType=DOUBLE}, #{agcBizArea,jdbcType=DOUBLE},
+		#{agcCrewSize,jdbcType=INTEGER},
+		#{agcRatingProfes,jdbcType=INTEGER})
+	</insert>
+	<update id="updateAgc" parameterType="com.credit.model.rate.AgcBase">
+		update agc_base_info
+		set
+		agcOrgId = #{agcOrgId,jdbcType=VARCHAR},
+		agcCnName =
+		#{agcCnName,jdbcType=VARCHAR},
+		agcEnName =
+		#{agcEnName,jdbcType=VARCHAR},
+		agcNature =
+		#{agcNature,jdbcType=INTEGER},
+		agcFoundingDate =
+		#{agcFoundingDate,jdbcType=DATE},
+		agcRegisType =
+		#{agcRegisType,jdbcType=INTEGER},
+		agcRagisNum =
+		#{agcRagisNum,jdbcType=VARCHAR},
+		agcRagisDate =
+		#{agcRagisDate,jdbcType=DATE},
+		agcBizLicsExpDate =
+		#{agcBizLicsExpDate,jdbcType=DATE},
+		agcRegisAddr =
+		#{agcRegisAddr,jdbcType=VARCHAR},
+		agcMunicpPrv =
+		#{agcMunicpPrv,jdbcType=INTEGER},
+		agcMunicpCity =
+		#{agcMunicpCity,jdbcType=INTEGER},
+		agcMunicpDistr =
+		#{agcMunicpDistr,jdbcType=INTEGER},
+		agcAbrdInvstRegisNum =
+		#{agcAbrdInvstRegisNum,jdbcType=VARCHAR},
+		agcNTaxCertiNum =
+		#{agcNTaxCertiNum,jdbcType=VARCHAR},
+		agcLTaxCertiNum =
+		#{agcLTaxCertiNum,jdbcType=VARCHAR},
+		agcLoanCardCode =
+		#{agcLoanCardCode,jdbcType=VARCHAR},
+		agcDefaultRateCode =
+		#{agcDefaultRateCode,jdbcType=BIGINT},
+		agcLegleRepr =
+		#{agcLegleRepr,jdbcType=VARCHAR},
+		agcLegleReprIDType =
+		#{agcLegleReprIDType,jdbcType=INTEGER},
+		agcLegleReprIDNum =
+		#{agcLegleReprIDNum,jdbcType=VARCHAR},
+		agcQualification =
+		#{agcQualification,jdbcType=VARCHAR},
+		agcBizScope =
+		#{agcBizScope,jdbcType=VARCHAR},
+		agcContactName =
+		#{agcContactName,jdbcType=VARCHAR},
+		agcContactNumber =
+		#{agcContactNumber,jdbcType=VARCHAR},
+		agcFax =
+		#{agcFax,jdbcType=VARCHAR},
+		agcHQAddress =
+		#{agcHQAddress,jdbcType=VARCHAR},
+		agcHQCode =
+		#{agcHQCode,jdbcType=INTEGER},
+		agcPostalAddr =
+		#{agcPostalAddr,jdbcType=VARCHAR},
+		agcEmail =
+		#{agcEmail,jdbcType=VARCHAR},
+		agcWebsite =
+		#{agcWebsite,jdbcType=VARCHAR},
+		agcListedLoacation =
+		#{agcListedLoacation,jdbcType=CHAR},
+		agcRegisCapital =
+		#{agcRegisCapital,jdbcType=DOUBLE},
+		agcBizArea =
+		#{agcBizArea,jdbcType=DOUBLE},
+		agcCrewSize =
+		#{agcCrewSize,jdbcType=INTEGER},
+		agcRatingProfes =
+		#{agcRatingProfes,jdbcType=INTEGER}
+		where agcId =
+		#{agcId,jdbcType=VARCHAR}
+  </update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select agcId, agcOrgId, agcCnName, agcEnName, agcNature,
+		agcFoundingDate,
+		agcRegisType,
+		agcRagisNum, agcRagisDate,
+		agcBizLicsExpDate, agcRegisAddr, agcMunicpPrv,
+		agcMunicpCity,
+		agcMunicpDistr, agcAbrdInvstRegisNum, agcNTaxCertiNum,
+		agcLTaxCertiNum,
+		agcLoanCardCode,
+		agcDefaultRateCode, agcLegleRepr,
+		agcLegleReprIDType, agcLegleReprIDNum,
+		agcQualification,
+		agcBizScope,
+		agcContactName, agcContactNumber, agcFax, agcHQAddress, agcHQCode,
+		agcPostalAddr,
+		agcEmail, agcWebsite, agcListedLoacation,
+		agcRegisCapital, agcBizArea,
+		agcCrewSize,
+		agcRatingProfes
+		from
+		agc_base_info
+		where agcId = #{agcId,jdbcType=VARCHAR}
+  </select>
+	<resultMap id="ListAgcMap" type="com.credit.model.rate.ListAgcBase" />
+	<select id="searchLimit" resultMap="ListAgcMap">
+		select agcId, agcCnName, agcNature, agcRagisDate, agcMunicpPrv,
+		agcMunicpCity,agcMunicpDistr
+		from
+		agc_base_info
+		where
+		1=1
+		<if test="agcCnName !=null ">
+			and agcCnName LIKE CONCAT(CONCAT('%', #{agcCnName}),'%')
+		</if>
+		<if test="agcRagisDate !=null ">
+			and agcRagisDate=#{agcRagisDate}
+		</if>
+		<if test="agcNature !=null and agcNature !=-1">
+			and agcNature=#{agcNature}
+		</if>
+		<if test="agcRegisAddr !=null ">
+			and agcRegisAddr LIKE CONCAT(CONCAT('%',
+			#{agcRegisAddr}),'%')
+		</if>
+		<if test="agcMunicpPrv !=-1 and agcMunicpPrv!=null">
+			and agcMunicpPrv=#{agcMunicpPrv}
+		</if>
+		<if test="agcMunicpCity !=-1 and agcMunicpCity!=null">
+			and agcMunicpCity=#{agcMunicpCity}
+		</if>
+		<if test="agcMunicpDistr !=-1 and agcMunicpDistr!=null">
+			and agcMunicpDistr=#{agcMunicpDistr}
+		</if>
+		<if test="agcContactNumber !=null ">
+			and agcContactNumber=#{agcContactNumber}
+		</if>
+		<if test="agcOrgId !=null ">
+			and agcOrgId=#{agcOrgId}
+		</if>
+		<if test="agcRatingProfes !=null ">
+			and agcRatingProfes=#{agcRatingProfes}
+		</if>
+		<if test="agcLegleRepr !=null ">
+			and agcLegleRepr LIKE CONCAT(CONCAT('%',
+			#{agcLegleRepr}),'%')
+		</if>
+	</select>
+	<select id="listLimit" resultMap="ListAgcMap">
+		select agcId, agcCnName, agcNature, agcRagisDate, agcMunicpPrv,
+		agcMunicpCity,agcMunicpDistr
+		from
+		agc_base_info
+		where
+		1=1
+		<if test="agcCnName !=null ">
+			and agcCnName LIKE CONCAT(CONCAT('%', #{agcCnName}),'%')
+		</if>
+		<if test="agcRagisDate !=null ">
+			and agcRagisDate=#{agcRagisDate}
+		</if>
+		<if test="agcNature !=null ">
+			and agcNature=#{agcNature}
+		</if>
+		<if test="agcRegisAddr !=null ">
+			and agcRegisAddr LIKE CONCAT(CONCAT('%',
+			#{agcRegisAddr}),'%')
+		</if>
+		<if test="agcMunicpPrv !=-1 and agcMunicpPrv!=null">
+			and agcMunicpPrv=#{agcMunicpPrv}
+		</if>
+		<if test="agcMunicpCity !=-1 and agcMunicpCity!=null">
+			and agcMunicpCity=#{agcMunicpCity}
+		</if>
+		<if test="agcMunicpDistr !=-1 and agcMunicpDistr!=null">
+			and agcMunicpDistr=#{agcMunicpDistr}
+		</if>
+		<if test="agcContactNumber !=null ">
+			and agcContactNumber=#{agcContactNumber}
+		</if>
+		<if test="agcOrgId !=null ">
+			and agcOrgId=#{agcOrgId}
+		</if>
+		<if test="agcRatingProfes !=null ">
+			and agcRatingProfes=#{agcRatingProfes}
+		</if>
+		<if test="agcLegleRepr !=null ">
+			and agcLegleRepr LIKE CONCAT(CONCAT('%',
+			#{agcLegleRepr}),'%')
+		</if>
+	</select>
+	<resultMap type="com.credit.model.rate.AgcNameModel" id="AgcNameModelMap"></resultMap>
+	<select id="getAgcName" parameterType="java.lang.Integer"
+		resultMap="AgcNameModelMap">
+		select agcCnName, agcEnName
+		from
+		agc_base_info
+		where
+		agcId =
+		#{agcId,jdbcType=VARCHAR}
+	</select>
+</mapper>

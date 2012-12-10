@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.credit.mapper.rate.RatingBizMapper">
+	<resultMap id="BaseResultMap" type="RatingBiz">
+		<id column="rateId" property="rateId" jdbcType="VARCHAR" />
+		<result column="agcId" property="agcId" jdbcType="INTEGER" />
+		<result column="firmId" property="firmId" jdbcType="INTEGER" />
+		<result column="firmCnName" property="firmCnName" jdbcType="VARCHAR" />
+		<result column="rateBizType" property="rateBizType" jdbcType="VARCHAR" />
+		<result column="rateRegionProvince" property="rateRegionProvince"
+			jdbcType="VARCHAR" />
+		<result column="rateRegionCity" property="rateRegionCity"
+			jdbcType="VARCHAR" />
+		<result column="rateRegionArea" property="rateRegionArea"
+			jdbcType="VARCHAR" />
+		<result column="rateHy" property="rateHy" jdbcType="VARCHAR" />
+		<result column="rateDate" property="rateDate" jdbcType="DATE"
+			typeHandler="org.apache.ibatis.type.DateOnlyTypeHandler" />
+		<result column="rateScanFile" property="rateScanFile" jdbcType="VARCHAR" />
+		<result column="rateMoney" property="rateMoney" jdbcType="DOUBLE" />
+		<result column="rateChargeDate" property="rateChargeDate"
+			jdbcType="DATE" typeHandler="org.apache.ibatis.type.DateOnlyTypeHandler" />
+		<result column="rateScanReceipt" property="rateScanReceipt"
+			jdbcType="VARCHAR" />
+		<result column="rateGzApScanFile" property="rateGzApScanFile"
+			jdbcType="VARCHAR" />
+		<result column="rateGzId" property="rateGzId" jdbcType="INTEGER" />
+		<result column="rateThird" property="rateThird" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	<insert id="insert" parameterType="RatingBiz">
+		insert into credit_ratingbiz
+		(rateId, agcId, firmId,
+		rateBizType, rateRegionProvince,
+		rateRegionCity,
+		rateRegionArea, rateHy, rateDate,
+		rateScanFile,
+		rateMoney,
+		rateChargeDate,
+		rateScanReceipt, rateGzApScanFile, rateGzId,
+		rateThird,
+		state)
+		values (#{rateId,jdbcType=VARCHAR},
+		#{agcId,jdbcType=INTEGER},
+		#{firmId,jdbcType=INTEGER},
+		#{rateBizType,jdbcType=VARCHAR},
+		#{rateRegionProvince,jdbcType=VARCHAR},
+		#{rateRegionCity,jdbcType=VARCHAR},
+		#{rateRegionArea,jdbcType=VARCHAR}, #{rateHy,jdbcType=VARCHAR},
+		#{rateDate,jdbcType=DATE},
+		#{rateScanFile,jdbcType=VARCHAR},
+		#{rateMoney,jdbcType=DOUBLE}, #{rateChargeDate,jdbcType=DATE},
+		#{rateScanReceipt,jdbcType=VARCHAR},
+		#{rateGzApScanFile,jdbcType=VARCHAR}, #{rateGzId,jdbcType=INTEGER},
+		#{rateThird,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+  </insert>
+	<update id="update" parameterType="RatingBiz">
+		update
+		credit_ratingbiz
+		set
+		agcId = #{agcId,jdbcType=INTEGER},
+		firmId =
+		#{firmId,jdbcType=INTEGER},
+		rateBizType =
+		#{rateBizType,jdbcType=VARCHAR},
+		rateRegionProvince =
+		#{rateRegionProvince,jdbcType=VARCHAR},
+		rateRegionCity =
+		#{rateRegionCity,jdbcType=VARCHAR},
+		rateRegionArea =
+		#{rateRegionArea,jdbcType=VARCHAR},
+		rateHy =
+		#{rateHy,jdbcType=VARCHAR},
+		rateDate = #{rateDate,jdbcType=DATE},
+		rateScanFile = #{rateScanFile,jdbcType=VARCHAR},
+		rateMoney =
+		#{rateMoney,jdbcType=DOUBLE},
+		rateChargeDate =
+		#{rateChargeDate,jdbcType=DATE},
+		rateScanReceipt =
+		#{rateScanReceipt,jdbcType=VARCHAR},
+		rateGzApScanFile =
+		#{rateGzApScanFile,jdbcType=VARCHAR},
+		rateGzId =
+		#{rateGzId,jdbcType=INTEGER},
+		rateThird =
+		#{rateThird,jdbcType=VARCHAR},
+		state = #{state,jdbcType=INTEGER}
+		where
+		rateId = #{rateId,jdbcType=VARCHAR}
+  </update>
+	<update id="updateBizState" parameterType="StateChangeModel">
+		update
+		credit_ratingbiz
+		set
+		state = #{state,jdbcType=INTEGER},
+		submitRatingBizTime=#{changeDate}
+		where rateId =
+		#{rateId,jdbcType=VARCHAR}
+  </update>
+	<update id="approve" parameterType="StateChangeModel">
+		update
+		credit_ratingbiz
+		set
+		state = #{state,jdbcType=INTEGER},
+		handledRatingBizTime=#{changeDate}
+		where rateId =
+		#{rateId,jdbcType=VARCHAR}
+  </update>
+	<update id="updateBizReportKey" parameterType="com.credit.model.rate.ReportChangeModel">
+		update
+		credit_ratingbiz
+		set
+		reportId = #{reportId,jdbcType=VARCHAR}
+		where
+		rateId
+		=
+		#{rateId,jdbcType=VARCHAR}
+  </update>
+	<update id="back" parameterType="com.credit.actions.rate.HandleBizBean">
+		update
+		credit_ratingbiz
+		set
+		state =
+		#{state,jdbcType=INTEGER},
+		handledRatingBizTime=#{changeDate},
+		backReason=#{backReason}
+		where rateId =
+		#{rateId,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select rateId, agcId, a.firmId,b.firmCnName,rateBizType,
+		rateRegionProvince,
+		rateRegionCity, rateRegionArea,
+		rateHy, rateDate,
+		rateScanFile, rateMoney, rateChargeDate, rateScanReceipt,
+		rateGzApScanFile,
+		rateGzId, rateThird, state
+		from credit_ratingbiz as a
+		,firm_base_info as b
+		where
+		rateId = #{rateId,jdbcType=VARCHAR}
+		and
+		a.firmId = b.firmId
+  </select>
+	<resultMap id="ListRatingBizMap" type="ListRatingBiz" />
+	<select id="searchLimit" resultMap="ListRatingBizMap">
+		select rateId, agcId, a.firmId, b.firmCnName,b.firmOrgId,
+		rateRegionProvince,
+		rateRegionCity,
+		rateRegionArea,
+		rateHy, rateDate,
+		rateMoney,
+		rateGzId,state,submitRatingBizTime,handledRatingBizTime,
+		a.reportId
+		from
+		credit_ratingbiz as a left join firm_base_info as b on
+		a.firmId = b.firmId where
+		1=1
+		<if test="states !=null ">
+			and state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+		</foreach>
+		</if>
+		<if test="state !=null ">
+			and state=#{state}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="rateDate !=null ">
+			and rateDate=#{rateDate}
+		</if>
+		<if test="rateGzId !=null ">
+			and rateGzId=#{rateGzId}
+		</if>
+		<if test="reportId !=null">
+			and reportId=#{reportId}
+		</if>
+		order by state
+	</select>
+	<select id="listLimit" resultMap="ListRatingBizMap">
+		select rateId, agcId, a.firmId, b.firmCnName,b.firmOrgId,
+		rateRegionProvince,
+		rateRegionCity,
+		rateRegionArea,
+		rateHy, rateDate,
+		rateMoney,
+		rateGzId,state,submitRatingBizTime,handledRatingBizTime,
+		a.reportId
+		from
+		credit_ratingbiz as a, firm_base_info as b where
+		1=1
+		<if test="states !=null ">
+			and state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+		</foreach>
+		</if>
+		<if test="state !=null ">
+			and state=#{state}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="rateDate !=null ">
+			and rateDate=#{rateDate}
+		</if>
+		<if test="rateGzId !=null ">
+			and rateGzId=#{rateGzId}
+		</if>
+		<if test="reportId !=null">
+			and reportId=#{reportId}
+		</if>
+		and a.firmId = b.firmId
+		order by state
+	</select>
+	<resultMap type="java.lang.String" id="reason">
+		<result column="reason" javaType="java.lang.String" />
+	</resultMap>
+	<select id="getBackReason" resultMap="reason" parameterType="java.lang.String">
+		select backReason as reason from credit_ratingbiz where rateId =
+		#{rateId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteBizs" parameterType="java.util.List">
+		delete from credit_ratingbiz where rateId in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<resultMap type="java.lang.Integer" id="allCount" />
+	<select id="allCount" resultMap="allCount">
+		select count(rateId)
+		from
+		credit_ratingbiz as a left join firm_base_info
+		as b on
+		a.firmId = b.firmId where
+		1=1
+		<if test="states !=null ">
+			and state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+		</foreach>
+		</if>
+		<if test="state !=null ">
+			and state=#{state}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="rateDate !=null ">
+			and rateDate=#{rateDate}
+		</if>
+		<if test="rateGzId !=null ">
+			and rateGzId=#{rateGzId}
+		</if>
+		<if test="reportId !=null">
+			and reportId=#{reportId}
+		</if>
+	</select>
+</mapper>

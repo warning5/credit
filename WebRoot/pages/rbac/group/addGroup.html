@@ -1,0 +1,32 @@
+<div class="page">
+	<div class="pageContent">
+        <form method="post" action="groupManager_addGroup.action" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)" name="group">
+            <div class="pageFormContent" layoutH="58">
+            	<span style="clear: both; display: block; height: 10px;" ></span>
+				
+				<label>组名称</label>
+				<input id="group_rname" class="required" name="group.name" type="text" minlength="2" maxlength="16" value="" />
+				
+				<span style="clear: both; display: block; height: 10px;" ></span>
+				
+                <label for="group_disable">是否禁用</label>
+                <select name="group.disable"  class="required combox"  id="group_disable">
+					<option value="false" label="否">否</option>
+					<option value="true" label="是">是</option>
+				</select>
+                
+                <span style="clear: both; display: block; height: 10px;" ></span>
+                
+				<label>描述</label>
+				<textarea id="group_description" class="" name="group.description" ></textarea>
+				
+            </div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+					<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+				</ul>
+			</div>
+       </form>
+	</div>
+</div>

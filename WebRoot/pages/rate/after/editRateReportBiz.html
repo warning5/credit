@@ -1,0 +1,135 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var value;
+	if($("#ratingReportBiz_reportScanFile").val()==''){
+		$("#reportScanFileId").attr("style" ,"display:none;");
+	}
+	$("#reportScanFileId").click(function(){
+		value = $("#ratingReportBiz_reportScanFile").val();
+		$("#reportScanFileId").attr("href",$("#reportScanFileId").attr("href")+"&file="+value);
+	});
+});
+</script>
+<div class="page">
+	<div class="pageContent">
+		<form method="post" action="afterRatingBiz_editRatingReportBiz.action"
+			class="pageForm required-validate"
+			onsubmit="return validateCallback(this, dialogAjaxDone);"
+			name="ratingReportBiz" id="ratingReportBiz">
+			<input type="hidden" id="ratingReportBiz_rateId" name="ratingReportBiz.rateId" /> 
+			<input type="hidden" id="ratingReportBiz_reportGlobalId" name="ratingReportBiz.reportGlobalId" /> 
+			<input type="hidden" id="ratingReportBiz_state" name="ratingReportBiz.state" /> 
+			<input type="hidden" id="ratingReportBiz_tabId" name="ratingReportBiz.tabId" />
+			<input type="hidden" id="ratingReportBiz_firmId" name="ratingReportBiz.firmId" />
+			<input type="hidden" id="ratingReportBiz_agcId" name="ratingReportBiz.agcId" />
+			<input type="hidden" id="ratingReportBiz_reportScanFile" name="ratingReportBiz.reportScanFileOld" >
+
+			<div class="pageFormContent" layoutH="56">
+				<p>
+					<label>评级报告编号：</label> <input name="ratingReportBiz.reportId"
+						type="text" size="30" class="required"
+						id="ratingReportBiz_reportId" />
+				</p>
+				<p>
+					<label>信用等级：</label> <select name="ratingReportBiz.xyLevel"
+						class="required combox" FWebSelectLabel="name"
+						FWebSelectValue="code" id="ratingReportBiz_xyLevel"></select>
+				</p>
+				<p>
+					<label>参考授信建议：</label> <input name="ratingReportBiz.xySuggestion"
+						type="text" size="30" class="required"
+						id="ratingReportBiz_xySuggestion" />
+				</p>
+				<p>
+					<label>信用等级展望：</label> <input name="ratingReportBiz.xyProspect"
+						type="text" size="30" class="required"
+						id="ratingReportBiz_xyProspect" />
+				</p>
+				<p>
+					<label>分析师标识号：</label> <input type="text"
+						name="ratingReportBiz.analystNum" class="required" size="30"
+						id="ratingReportBiz_analystNum" />
+				</p>
+				<p>
+					<label>信用等级出具日期：</label> <input name="ratingReportBiz.xyOutDate"
+						class="date required" type="text" size="30"
+						id="ratingReportBiz_xyOutDate" dateFmt="yyyy-MM-dd HH:mm:ss"
+						readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>信用等级生效日期：</label> <input type="text"
+						name="ratingReportBiz.xyStartDate" class="date required" size="30"
+						id="ratingReportBiz_xyStartDate" dateFmt="yyyy-MM-dd HH:mm:ss"
+						readonly="true" /><a class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>信用等级终止日期：</label> <input name="ratingReportBiz.xyEndDate"
+						type="text" class="date required" size="30"
+						id="ratingReportBiz_xyEndDate" dateFmt="yyyy-MM-dd HH:mm:ss"
+						readonly="true" /><a class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>信用等级撤销日期:</label> <input type="text"
+						name="ratingReportBiz.xyRevokeDate" class="date required"
+						size="30" id="ratingReportBiz_xyRevokeDate"
+						dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" /><a
+						class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>信用等级变更生效日期：</label> <input type="text" size="30"
+						class="date required" name="ratingReportBiz.xyChangeDate"
+						id="ratingReportBiz_xyChangeDate" dateFmt="yyyy-MM-dd HH:mm:ss"
+						readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>被评级企业资产总计：</label> <input
+						name="ratingReportBiz.entAssetsTotal" class="digits required"
+						type="text" size="30" alt="请输入数字"
+						id="ratingReportBiz_entAssetsTotal" />
+				</p>
+				<p>
+					<label>被评级企业贷款余额：</label> <input type="text" size="30" alt="请输入数字"
+						name="ratingReportBiz.entLoanBalance" class="digits required"
+						id="ratingReportBiz_entLoanBalance" />
+				</p>
+				<div class="unit">
+					<label>评级报告摘要：</label>
+					<textarea name="ratingReportBiz.reportDigestSummary" rows="7"
+						cols="93" id="ratingReportBiz_reportDigestSummary"></textarea>
+				</div>
+				<div class="unit">
+					<label>评级报告风险点：</label>
+					<textarea name="ratingReportBiz.reportDigestRisk" rows="7"
+						cols="93" id="ratingReportBiz_reportDigestRisk"></textarea>
+				</div>
+				<div class="unit">
+					<label>评级报告扫描件：</label> <input type="text" size="80"
+						name="ratingReportBiz.reportScanFile"
+						id="ratingReportBiz_reportScanFile" onchange="alert(123)"/> <a class="btnAttach"
+						href="pages/rate/upload.jsp?folder=reportScanFile" target="dialog"
+						title="文件上传" width="600" height="200"
+						lookupGroup="ratingReportBiz"><span>上传</span> </a>
+					
+					<a id="reportScanFileId" class="button" href="download.action?folder=reportScanFile" target="_blank"><span>下载</span></a>
+				</div>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">提交</button>
+							</div>
+						</div>
+					</li>
+					<li><div class="button">
+							<div class="buttonContent">
+								<button type="button" class="close">取消</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>

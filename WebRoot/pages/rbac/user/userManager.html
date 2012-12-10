@@ -1,0 +1,86 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="pageHeader" style="border:1px #B8D0D6 solid">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="userManager.action" method="post" id="searchUser" name="searchUser">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					&nbsp;&nbsp;<strong>账户</strong><input name="user.username" value=""  type="text" id="user_username"/>
+				</td>
+				<td>
+					&nbsp;&nbsp;<strong>是否禁用</strong>
+								<select id="user_disable" name="user.disable">
+									<option value="false" label="否">否</option>
+									<option value="true" label="是">是</option>
+								</select>
+				</td>
+                <td>
+                    <div class="subBar" style="margin-top:0px;">
+                        <ul style="float:left;">
+                            <li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+                        </ul>
+                    </div>
+                </td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="userManager_showAdd.action" width="500"  height="300" target="dialog"  title="添加" mask="true" ><span>添加</span></a></li>
+			<li><a class="edit" href="userManager_showEdit.action?user.id={user_id}" width="500" height="300" target="dialog" warn="请选择一条记录"  mask="true" ><span>修改</span></a></li>
+			<li><a title="确定要删除这些用户吗?" target="selectedTodo" rel="users" href="userManager_deleteUser.action" class="delete" warn="请选择记录"><span>删除</span></a></li>
+			<li><a title="确定要禁用这些用户吗?" target="selectedTodo" rel="users" href="userManager_disableUser.action" class="lock" warn="请选择记录"><span>禁用</span></a></li>
+			<li><a title="确定要解禁这些用户吗?" target="selectedTodo" rel="users" href="userManager_enableUser.action" class="unLock" warn="请选择记录"><span>解禁</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="115" id="users">
+		<thead>
+			<tr>
+				<th width="30"><input type="checkbox" group="users" class="checkboxCtrl"></th>
+				<th width="100">账号</th>
+				<th width="100">密码</th>
+				<th width="50">是否禁用</th>
+				<th width="400">描述</th>
+				<th width="160">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+				<tr FWebTable="head"  target="user_id" rel="user.id" >
+					<td FWebTable="ids"><input id="user_id" name="users" value="" type="checkbox"></td>
+					<td id="user_username" ></td>
+					<td id="user_password" ></td>
+					<td id="user_disable" ></td>
+					<td id="user_description" ></td>
+					<td>
+						<a title="编辑" target="dialog" href="userManager_showEdit.action" class="btnEdit" mask="true" >编辑</a>
+						<a title="确定要删除用户吗?" target="ajaxTodo" href="userManager_deleteUser.action" class="btnDel">删除</a>
+	                	<a title="确定要禁用用户吗?" target="ajaxTodo" href="userManager_disableUser.action" class="btnLock">禁用</a>
+	                    <a title="确定要解禁用户吗?" target="ajaxTodo" href="userManager_enableUser.action" class="btnUnLock">解禁</a>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span>
+			<select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="1">调整</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<div FWebTable="datainfo" ></div>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="" numPerPage="" pageNumShown="10" currentPage=""></div>
+			<form id="pagerForm" method="post" action="userManager.action" name="searchUser">
+				<input type="hidden" name="pageNum" value="1" />
+				<input type="hidden" name="numPerPage" value="" />
+			</form>
+	</div>
+</div>

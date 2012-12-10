@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>贵州省第三方信用评级管理系统</title>
+<link rel="stylesheet" type="text/css" href="html/css/main.css">
+<script type="text/javascript"src="fweb/core/jquery-1.7.2.min.js"></script>
+<script type='text/javascript' src='fweb/core/fweb.min.js'></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#user_username").focus();
+				$("body").keydown(function(e){
+				    　if(e.keyCode == 13){
+				    	if(validate()){
+							$("form").submit();
+						}
+				   }
+				});
+				$("#logon").click(function(){
+					if(validate()){
+						$("form").submit();
+					}
+				});
+				
+				var validate=function(){
+					var username=$("#user_username").val();
+					if($.trim(username)==""){
+						FWebMessage.show("logonMessage","请输入账户！");
+						$("#user_username").focus();
+						return false;
+					}
+					var password=$("#user_password").val();
+					if($.trim(password)==""){
+						FWebMessage.show("logonMessage","请输入密码！");
+						$("#user_password").focus();
+						return false;
+					}
+					return true;
+				}
+			});
+		</script>
+</head>
+<body class="small login">
+	<div id="wrapper">
+		<div id="header">
+			<h1 style="text-align:center;">系统登录</h1>
+		</div>
+		<div class="container">
+			<div id="topcorners">
+				<div class="cleft"></div>
+				<div class="cright"></div>
+			</div>
+			<div id="content">
+				<form name="logonForm" method="post" action="logon_doLogon.action" id="logonForm">
+					<table class="login" style="margin-left: auto; margin-right: auto;">
+						<tr>
+							<td>
+								<p class="mtop0 mbottom025">
+									<strong><label for="email">账户</label></strong>
+								</p> <input id="user_username" name="user.username" tabindex="1" class="inputtext" type="text">
+							</td>
+						</tr>
+						<tr>
+							<td><p class="mtop05 mbottom025">
+									<strong><label for="password">密码</label></strong>
+								</p> <input tabindex="2" class="inputtext" type="password" name="user.password" id="user_password"></td>
+						</tr>
+						<tr>
+							<td>
+								<div id="logonMessage"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p class="mtop025 mbottom0"></p>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top: 10px;" align="right"><input id="logon" class="bprimarypub80"
+								type="button" tabindex="3" value="登录"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div id="bottomcorners">
+				<div class="cleft"></div>
+				<div class="cright"></div>
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<p></p>
+		<p>
+			<z>Copyright © 2012 </z>
+			<a href="#" target="_blank"><font color="blue">credit.com</font></a>
+			<z>. All rights reserved.</z>
+		</p>
+	</div>
+</body>
+</html>

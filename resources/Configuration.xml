@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 配置管理器 -->
+<configuration>
+
+	<!-- 分页处理，配置数据库 -->
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+    
+	<!--表明重用预编译的SQL语句 -->
+	<settings>
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	<!-- 别名 -->
+	<typeAliases>
+		<typeAlias alias="Relation" type="com.bluecloud.persistence.pojo.Relation" />
+		<typeAlias alias="User" type="com.credit.rbac.bo.User" />
+		<typeAlias alias="Role" type="com.credit.rbac.bo.Role" />
+		<typeAlias alias="Group" type="com.credit.rbac.bo.Group" />
+		<typeAlias alias="Function" type="com.credit.rbac.bo.Function" />
+		<typeAlias alias="Operation" type="com.credit.rbac.bo.Operation" />
+		
+		<typeAlias alias="company" type="com.credit.org.bo.Company" />
+		
+		<typeAlias alias="RatingBiz" type="com.credit.model.rate.RatingBiz" />
+		<typeAlias alias="IndustryDic" type="com.credit.base.IndustryDic" />
+		<typeAlias alias="RateLevelDic" type="com.credit.base.RateLevelDic" />
+		<typeAlias alias="CityDic" type="com.credit.base.CityDic" />
+		<typeAlias alias="AreaDic" type="com.credit.base.AreaDic" />
+		<typeAlias alias="ProvinceDic" type="com.credit.base.ProvinceDic" />
+		<typeAlias alias="ListRatingBiz" type="com.credit.model.rate.ListRatingBiz" />
+		<typeAlias alias="ListRatingReportBiz" type="com.credit.model.rate.ListRatingReportBiz" />
+		<typeAlias alias="RatingReportBiz" type="com.credit.model.rate.RatingReportBiz" />
+		<typeAlias alias="StateChangeModel" type="com.credit.model.rate.StateChangeModel" />
+		<typeAlias alias="ReportComment" type="com.credit.model.rate.ReportComment" />
+	</typeAliases>
+
+	<!-- 分页处理，配置分页插件 -->
+	<plugins>    
+            <plugin interceptor="com.bluecloud.persistence.dao.PaginationInterceptor"/>    
+    </plugins>  
+
+</configuration>

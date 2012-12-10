@@ -1,0 +1,103 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#keyword").attr("name",$("#searchType").val()); 
+	$("#searchType").click(function(){
+		if($("#searchType").find("option:selected").val()=="listAgcBase.agcRagisDate"){
+			$("#keyword1").removeAttr("style");
+			$("#keyword").attr("style","display: none;");
+			$("#keyword1").attr("name",$("#searchType").find("option:selected").val()); 
+		}else{
+			$("#keyword1").attr("style","display: none;");
+			$("#keyword").removeAttr("style");
+		 	$("#keyword").attr("name",$("#searchType").find("option:selected").val()); 
+		}
+	});
+	});
+
+</script>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return dialogSearch(this);"
+		action="agc_lookup.action" method="get" name="searchForm" id="searchForm">
+		<div class="searchBar">
+
+			<table class="searchContent">
+				<tr>
+					<td>&nbsp;&nbsp;<strong>关键词：</strong><input name="keyword"
+						type="text" id="keyword" />
+						<input name="keyword" type="text" id="keyword1" class="date" style="display: none;"/>	
+					</td>
+					<td><select id="searchType" name="searchType">
+							<option value="listAgcBase.agcCnName">机构名称</option>
+							<option value="listAgcBase.agcRagisDate">注册时间</option>
+					</select>
+					</td>
+					<td>
+						<div class="subBar" style="margin-top: 0px;">
+							<ul style="float: left;">
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit">查询</button>
+										</div>
+									</div>
+								</li>
+								<li><a class="button" href="agc_showAdvanceSearch.action"
+									target="dialog" mask="true" title="查询框" height="350"><span>高级检索</span> </a>
+								</li>
+							</ul>
+						</div></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="5" id="agcsLookup">
+		<thead>
+			<tr>
+				<th width="30">序号</th>
+				<th width="100">机构标识</th>
+				<th width="100">机构名称</th>
+				<th width="50">机构性质</th>
+				<th width="120">所属区域</th>
+				<th width="100">注册时间</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr FWebTable="head" target="agcId" rel="agcId">
+				<td id="squence"></td>
+				<td id="agcId"></td>
+				<td id="agcCnName"></td>
+				<td id="agcNature"></td>
+				<td id="agcRegion"></td>
+				<td id="agcRagisDate"></td>
+				<td>
+					<a onclick="javascript:$.bringBack({id:'1', agcCnName:$(this).parents('tr').find('#agcCnName').text(), agcId:$(this).parents('tr').find('#agcId').text()})"  href="javascript:void(0);" class="btnSelect" title="评级机构列表">选择</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span> 			
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="1">调整</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<div FWebTable="datainfo"></div>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount=""
+			numPerPage="" pageNumShown="10" currentPage=""></div>
+		<form id="pagerForm" method="post" action="agc_lookup.action"
+			name="searchForm">
+			<input type="hidden" name="pageNum" value="1" /> <input
+				type="hidden" name="numPerPage" value="" />
+		</form>
+	</div>
+</div>

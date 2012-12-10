@@ -1,0 +1,151 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="page">
+	<div class="pageContent">
+		<form method="post" action="firm_editFirm.action"
+			class="pageForm required-validate"
+			onsubmit="return validateCallback(this, dialogAjaxDone);" name="firm"
+			id="firm">
+			<input name="firm.firmId" id="firm_firmId" type="hidden" />
+			<div class="pageFormContent" layoutH="56">
+				<p>
+					<label>企业中文名称：</label> <input name="firm.firmCnName" type="text"
+						size="30" class="required" id="firm_firmCnName" />
+				</p>
+				<p>
+					<label>企业英文英文名称：</label> <input name="firm.firmEnName" type="text"
+						size="30" class="required" id="firm_firmEnName" />
+				</p>
+				<p>
+					<label>主体组织机构代码：</label> <input name="firm.firmOrgId"
+						class="required" type="text" size="30" id="firm_firmOrgId" />
+				</p>
+				<p>
+					<label>企业性质：</label> <select name="firm.firmNature"
+						class="required combox" id="firm_firmNature"
+						FWebSelectLabel="name" FWebSelectValue="code">
+					</select>
+				</p>
+				<p>
+					<label>企业注册地址：</label> <input name="firm.firmRegisAddr" type="text"
+						size="30" class="required" id="firm_firmRegisAddr" />
+				</p>
+				<p>
+					<label>工商注册登记登记类型：</label> <select name="firm.firmRegisType"
+						class="required combox" id="firm_firmRegisType"
+						FWebSelectLabel="name" FWebSelectValue="code">
+					</select>
+				</p>
+				<p>
+					<label>行业分类 ：</label> <select name="firm.firmIndustryType"
+						class="required combox" id="firm_firmIndustryType"
+						FWebSelectLabel="name" FWebSelectValue="code">
+					</select>
+				</p>
+				<p>
+					<label>工商注册登记日期：</label> <input type="text"
+						name="firm.firmRagisDate" class="date required" size="30"
+						id="firm_firmRagisDate" dateFmt="yyyy-MM-dd HH:mm:ss"
+						readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>营业执照到期日期：</label> <input type="text"
+						name="firm.firmBizLicnsExpDate" class="date required" size="30"
+						id="firm_firmBizLicnsExpDate" dateFmt="yyyy-MM-dd HH:mm:ss"
+						readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a>
+				</p>
+				<p>
+					<label>注册登记号：</label> <input name="firm.firmRagisNum" type="text"
+						size="30" class="required" id="firm_firmRagisNum" />
+				</p>
+				<p>
+					<label>企业法人代表姓名：</label> <input name="firm.firmLegleRepre"
+						type="text" size="30" class="required" id="firm_firmLegleRepre" />
+				</p>
+				<p>
+					<label>税务登记证号（国税）：</label> <input name="firm.firmNTaxCertiNum"
+						type="text" size="30" class="required" id="firm_firmNTaxCertiNum" />
+				</p>
+				<p>
+					<label>税务登记证号（地税）：</label> <input name="firm.firmLTaxCertiNum"
+						type="text" size="30" class="required" id="firm_firmLTaxCertiNum" />
+				</p>
+				<p>
+					<label>行政区划：</label> <select class="combox"
+						name="firm.firmMunicpPrv" ref="firm_firmMunicpCity"
+						refUrl="dic_city.action?value={value}" FWebSelectLabel="name"
+						FWebSelectValue="code" id="firm_firmMunicpPrv">
+					</select> <select class="combox" name="firm.firmMunicpCity"
+						id="firm_firmMunicpCity" ref="firm_firmMunicpDistr"
+						refUrl="dic_area.action?value={value}" FWebSelectLabel="name"
+						FWebSelectValue="code">
+					</select> <select class="combox" name="firm.firmMunicpDistr"
+						id="firm_firmMunicpDistr" FWebSelectLabel="name"
+						FWebSelectValue="code">
+					</select>
+
+				</p>
+				<p>
+					<label>主体贷款卡编码：</label> <input name="firm.firmLoanCardCode"
+						type="text" size="30" class="required" id="firm_firmLoanCardCode" />
+				</p>
+				<p>
+					<label>企业负责人人姓名：</label> <input name="firm.firmPrincipalName"
+						type="text" size="30" class="required" id="firm_firmPrincipalName" />
+				</p>
+				<p>
+					<label>联系电话：</label> <input name="firm.firmContactNumber"
+						type="text" size="30" class="required" id="firm_firmContactNumber" />
+				</p>
+				<p>
+					<label>传真号码：</label> <input name="firm.firmFax" type="text"
+						size="30" class="required" id="firm_firmFax" />
+				</p>
+				<p>
+					<label>企业从业人数：</label> <input name="firm.firmCrewSize"
+						class="digits required" type="text" size="30" alt="请输入数字"
+						id="firm_firmCrewSize" />
+				</p>
+				<p>
+					<label>企业网址：</label> <input name="firm.firmWebsite" type="text"
+						size="30" id="firm_firmWebsite" />
+				</p>
+				<p>
+					<label>上市地：</label> <input name="firm.firmListedLoac" type="text"
+						size="30" id="firm_firmListedLoac" />
+				</p>
+				<p>
+					<label>上市代码：</label> <input name="firm.firmListedCode" type="text"
+						size="30" id="firm_firmListedCode" />
+				</p>
+				<p>
+					<label>企业通信地址：</label> <input name="firm.firmPostalAddr"
+						type="text" size="30" class="required" id="firm_firmPostalAddr" />
+				</p>
+
+				<p>
+					<label>企业特征：</label> <input name="firm.firmFeature" type="text"
+						size="30" id="firm_firmFeature" />
+				</p>
+				<p>
+					<label>经营范围：</label> <input name="firm.firmBizScope" type="text"
+						size="30" id="firm_firmBizScope" />
+
+				</p>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">提交</button>
+							</div>
+						</div></li>
+					<li><div class="button">
+							<div class="buttonContent">
+								<button type="button" class="close">取消</button>
+							</div>
+						</div></li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>

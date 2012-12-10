@@ -1,0 +1,13 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+	<div class="pageContent" style="border-bottom: 1px solid #B8D0D6; border-left: 1px solid #B8D0D6; border-right: 1px solid #B8D0D6;">
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li><a class="add" href="roleAllocateFunction_showAddFunction.action?role.id={role_id}" width="300" height="500" target="dialog" warn="请选择一条记录"  mask="true" ><span>添加</span></a></li>
+					<li><a title="确定要删除这些功能分配吗?" target="treeSelectedTodo" rel="ids" href="roleAllocateFunction_disallocateFunction.action" class="delete" warn="请选择一条记录"><span>删除</span></a></li>
+				</ul>
+				<form id="functionRole" >
+					<input type="hidden" name="role.id" value="1"  id="role_id"/>
+				</form>
+			</div>
+			<div  style="display: block; overflow: auto; height: 50%;" id="roleFunctionTree"  layoutH="25"></div>
+	</div>

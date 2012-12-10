@@ -1,0 +1,113 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var value;
+	if($("#ratingBiz_rateScanReceipt").val()==''){
+		$("#rateScanReceiptId").attr("style" ,"display:none;");
+	}
+	if($("#ratingBiz_rateGzApScanFile").val()==''){
+		$("#rateGzApScanFileId").attr("style" ,"display:none;");
+	}
+	if($("#ratingBiz_rateScanFile").val()==''){
+		$("#rateScanFileId").attr("style" ,"display:none;");
+	}
+	$("#rateScanReceiptId").click(function(){
+		value = $("#ratingBiz_rateScanReceipt").val();
+		$("#rateScanReceiptId").attr("href",$("#rateScanReceiptId").attr("href")+"&file="+value);
+	});
+	$("#rateGzApScanFileId").click(function(){
+		value = $("#ratingBiz_rateGzApScanFile").val();
+		$("#rateGzApScanFileId").attr("href",$("#rateGzApScanFileId").attr("href")+"&file="+value);
+	});
+	$("#rateScanFileId").click(function(){
+		value = $("#ratingBiz_rateScanFile").val();
+		$("#rateScanFileId").attr("href",$("#rateScanFileId").attr("href")+"&file="+value);
+	});
+});
+</script>
+<div class="page">
+	<div class="pageContent">
+		<form method="post" class="pageForm" name="ratingBiz" id="ratingBiz">
+			<div class="pageFormContent" layoutH="56">
+				<p>
+					<label>评级业务编号：</label> <input name="ratingBiz.rateId" type="text"
+						size="30" readonly="readonly" id="ratingBiz_rateId" />
+				</p>
+				<p>
+					<label>评级机构代码：</label> <input name="ratingBiz.agcId" type="text"
+						size="30" readonly="readonly" id="ratingBiz_agcId" />
+				</p>
+				<p>
+					<label>被评企业名称：</label> <input type="text" name="ratingBiz.firmCnName"
+						id="ratingBiz_firmCnName" readonly="readonly" />
+				</p>
+				<p>
+					<label>主体评级业务类别：</label> <input name="ratingBiz.rateBizType"
+						id="ratingBiz_rateBizType" type="text" readonly="readonly" />
+				</p>
+				<p>
+					<label>评级业务所属行业：</label> <input name="ratingBiz.rateHy"
+						id="ratingBiz_rateHy" type="text" readonly="readonly" />
+				</p>
+				<p>
+					<label>发生日期：</label> <input type="text" name="ratingBiz.rateDate"
+						size="30" id="ratingBiz_rateDate" readonly="readonly" />
+				</p>
+				<p>
+					<label>合同金额：</label> <input name="ratingBiz.rateMoney"
+						readonly="readonly" type="text" size="30" id="ratingBiz_rateMoney" />
+				</p>
+				<p>
+					<label>区域：</label> <input type="text"
+						name="ratingBiz.rateRegionProvince"	id="ratingBiz_rateRegionProvince"
+						readonly="readonly" size="8"/>
+					<input type="text" name="ratingBiz.rateRegionCity"
+						id="ratingBiz_rateRegionCity" readonly="readonly" size="10"/>
+					<input type="text" name="ratingBiz.rateRegionArea"
+						id="ratingBiz_rateRegionArea" readonly="readonly" size="10"/>
+				</p>
+				<p>
+					<label>收费日期：</label> <input type="text"
+						name="ratingBiz.rateChargeDate" size="30"
+						id="ratingBiz_rateChargeDate" readonly="readonly" />
+				</p>
+				<p>
+					<label>相关第三方：</label> <input name="ratingBiz.rateThird" type="text"
+						size="30" id="ratingBiz_rateThird" readonly="readonly" />
+				</p>
+				<p>
+					<label>跟踪评级标识:</label> <input type="text" name="ratingBiz.rateGzId"
+						readonly="readonly" name="ratingBiz_rateGzId" />
+				</p>
+				<div class="unit">
+					<label>收据扫描件：</label>
+					<input type="text" size="60" name="ratingBiz.rateScanReceipt" id="ratingBiz_rateScanReceipt"
+						readonly="readonly" />
+					&nbsp;&nbsp;
+					<a style="margin-left: 10px;" id="rateScanReceiptId" class="button" href="download.action?folder=rateScanReceipt" target="_blank""><span>下载</span></a>
+				</div>
+				<div class="unit">
+					<label>跟踪评级安排扫描件：</label> <input type="text"
+						name="ratingBiz.rateGzApScanFile" size="60" readonly="readonly"
+						id="ratingBiz_rateGzApScanFile" />
+					<a  style="margin-left: 10px;" id="rateGzApScanFileId" class="button" href="download.action?folder=rateGzApScanFile" target="_blank"><span>下载</span></a>
+				</div>
+				<div class="unit">
+					<label>信用评级协议扫描件：</label> <input type="text" size="60"
+						name="ratingBiz.rateScanFile" readonly="readonly"
+						id="ratingBiz_rateScanFile" />
+					<a style="margin-left: 10px;" id="rateScanFileId" class="button" href="download.action?folder=rateScanFile" target="_blank"><span>下载</span></a>
+				</div>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="button">
+							<div class="buttonContent">
+								<button type="button" class="close">取消</button>
+							</div>
+						</div></li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>

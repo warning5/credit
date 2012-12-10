@@ -1,0 +1,13 @@
+	<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+	<div class="pageContent" style="border-bottom: 1px solid #B8D0D6; border-left: 1px solid #B8D0D6; border-right: 1px solid #B8D0D6;overflow: auto;">
+		<form method="post" action="roleAllocateFunction_addFunction.action" class="pageForm required-validate" onsubmit="return validateTreeCallback(this, dialogAjaxDone)" name="roleFunctions" warn="请选择功能">
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit" target="dialog" mask="true">确定分配</button></div></div></li>
+					<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+				</ul>
+			</div>
+			<div  style="display: block; overflow: auto;" id="addFunctionTree"  layoutH="35"></div>
+		</form>
+	</div>
+	

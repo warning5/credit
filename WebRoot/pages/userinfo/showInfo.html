@@ -1,0 +1,38 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="page">
+	<div class="pageContent">
+        <form method="post" action="userInfo_editUser.action" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)" id="user" name="user">
+            <div class="pageFormContent" layoutH="58">
+            	<span style="clear: both; display: block; height: 10px;" ></span>
+				
+				<label>账号</label>
+				<input id="user_username" class="required" name="user.username" type="text" minlength="4" maxlength="16" value="" readonly="readonly"/>
+				<input type="hidden" name="user.id"  id="user_id" value="" />
+				<span style="clear: both; display: block; height: 10px;" ></span>
+				
+				<label>密码</label>
+				<input id="user_password" class="required alphanumeric" name="user.password" type="password" minlength="6" maxlength="32" value="" />
+				
+				<span style="clear: both; display: block; height: 10px;" ></span>
+				
+                <label for="user_disable">是否禁用</label>
+                <select name="user.disable"  class="required"  id="user_disable" disabled="disabled">
+					<option value="false" label="否">否</option>
+					<option value="true" label="是">是</option>
+				</select>
+                
+                <span style="clear: both; display: block; height: 10px;" ></span>
+                
+				<label>描述</label>
+				<textarea id="user_description" class="" name="user.description"  readonly="readonly"></textarea>
+				
+            </div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+					<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+				</ul>
+			</div>
+       </form>
+	</div>
+</div>

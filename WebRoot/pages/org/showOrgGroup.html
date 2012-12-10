@@ -1,0 +1,36 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="page">
+	<div class="pageContent" style="border:1px #B8D0D6 solid">
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li><a class="add" href="orgAllocateGroup_showAddGroup.action?company.id={company_id}" width="300" height="500" target="dialog" warn="请选择一条记录"  mask="true"  title="添加角色组"><span>添加</span></a></li>
+					<li><a title="确定要删除这些组分配吗?" target="selectedTodo" rel="companyGroups" href="orgAllocateGroup_disallocateGroup.action" class="delete" warn="请选择一条记录"><span>删除</span></a></li>
+				</ul>
+				<form id="groupCompany" >
+					<input type="hidden" name="company.id" value="1"  id="company_id"/>
+				</form>
+			</div>
+			<table class="table" width="100%" layoutH="112" id="companyGroups">
+				<thead>
+					<tr>
+						<th width="30"><input type="checkbox" group="companyGroups" class="checkboxCtrl"></th>
+						<th width="300">组名称</th>
+						<th width="100">是否禁用</th>
+						<th width="300">描述</th>
+						<th width="50">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+						<tr FWebTable="head"  target="pojo_id" rel="group.id" >
+							<td FWebTable="ids"><input id="group_id" name="companyGroups" value="" type="checkbox"></td>
+							<td id="group_name" ></td>
+							<td id="group_disable" ></td>
+							<td id="group_description" ></td>
+							<td>
+								<a title="确定要删除组吗?" target="ajaxTodo" href="orgAllocateGroup_disallocateGroup.action" class="btnDel">删除</a>
+							</td>
+						</tr>
+				</tbody>
+			</table>
+	</div>
+</div>

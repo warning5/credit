@@ -1,0 +1,114 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+	var tabid;
+	$(document).ready(function() {
+		tabid = navTab._getTabs().eq(navTab._currentIndex).attr("tabid");
+		$("#edit").attr("href", $("#edit").attr("href") + "&tabId=" + tabid);
+		$("#up").attr("href", $("#up").attr("href") + "?tabId=" + tabid);
+	});
+</script>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);"
+		action="afterHandleBiz_afterBackList.action" method="post"
+		name="searchForm" id="searchForm">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>&nbsp;&nbsp; 企业名称： <input name="biz.firmCnName"
+						id="biz_firmCnName" type="text" /></td>
+					<td>&nbsp;&nbsp; 评级师编号： <input name="biz.analystNum"
+						id="biz_analystNum" type="text" /></td>
+					<td>&nbsp;&nbsp; 信用等级： <select name="biz.xyLevel"
+						FWebSelectLabel="name" FWebSelectValue="code" id="afterBackList_xyLevel">
+							<option value="">请选择</option>
+					</select></td>
+					<td>
+						<div class="subBar">
+							<ul style="float: left;">
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit">查询</button>
+										</div>
+									</div></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a id="edit" class="edit"
+				href="afterRatingBiz_showEdit.action?reportId={reportId}"
+				target="dialog" warn="请选择一条记录" width="850" height="580" mask="true"
+				rel="dlg_editReport"><span>修改</span> </a>
+			</li>
+			<li><a id="up" title="确定上报吗？"
+				warn="您没有选择任何项目！请选择列表中的数据，选中项将会以蓝色高亮显示！" target="selectedTodo"
+				rel="ratingReportBizs" href="afterRatingBiz_uploadReport.action"
+				class="detail"><span>上报</span> </a>
+			</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="112" id="ratingReportBizs">
+		<thead>
+			<tr>
+				<th width="30">序号</th>
+				<th width="30"><input type="checkbox" group="ratingReportBizs"
+					class="checkboxCtrl">
+				</th>
+				<th width="100">评级报告编号</th>
+				<th width="100">被评企业</th>
+				<th width="100">分析师标识</th>
+				<th width="100">信用等级</th>
+				<th width="100">信用等级生效日期</th>
+				<th width="100">信用等级终止日期</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr FWebTable="head" target="reportId" rel="reportId">
+				<td id="squence"></td>
+				<td FWebTable="ids"><input id="reportId"
+					name="ratingReportBizs" type="checkbox">
+				</td>
+				<td id="bizReportId"></td>
+				<td id="firmCnName"></td>
+				<td id="analystNum"></td>
+				<td id="xyLevel"></td>
+				<td id="xyStartDate"></td>
+				<td id="xyEndDate"></td>
+				<td><a title="编辑" onclick="edit()" target="dialog"
+					href="afterRatingBiz_showEdit.action" class="btnEdit" width="850"
+					height="580" mask="true" rel="dlg_editReport">编辑</a> <a
+					title="确定上报业务?" target="ajaxTodo"
+					href="afterRatingBiz_uploadReport.action" class="btnInfo">报备</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span> <select class="combox" name="numPerPage"
+				onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="1">调整</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<div FWebTable="datainfo"></div>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount=""
+			numPerPage="" pageNumShown="10" currentPage=""></div>
+		<form id="pagerForm" method="post"
+			action="afterHandleBiz_afterBackList.action" name="searchForm">
+			<input type="hidden" name="pageNum" value="1" /> <input
+				type="hidden" name="numPerPage" value="" />
+		</form>
+	</div>
+</div>

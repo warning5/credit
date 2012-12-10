@@ -1,0 +1,107 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#biz_state").click(function(){
+			var v=$("#biz_state").find("option:selected").val();
+			if(v > 3){
+				$("#searchForm").attr("action","afterRatingBiz_search.action");
+			}else{
+				$("#searchForm").attr("action","ratingBiz_search.action");
+			}
+		});
+	});
+	function check(){
+		if($("#biz_state").find("option:selected").val()==-1){
+			alert("请选择状态")		
+			return false;
+		}else
+			return true;
+	}
+</script>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);"
+		action="ratingBiz_search.action" method="post" name="searchForm"
+		id="searchForm">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>&nbsp;&nbsp;<strong>评级业务状态：</strong> <select
+						id="biz_state" name="biz.state">
+							<option value="-1">选择</option>
+							<option value="1">审批中</option>
+							<option value="6">已归档</option>
+					</select>
+					</td>
+					<td>
+						<div class="subBar" style="margin-top: 0px;">
+							<ul style="float: left;">
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit">查询</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="detail"
+				href="ratingBiz_searchBrower.action?rateId={rateId}" target="dialog"
+				warn="请选择一条记录" width="850" height="360" rel="rateBizs"><span>浏览</span>
+			</a>
+			</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="112" id="rateBizs">
+		<thead>
+			<tr>
+				<th width="30">序号</th>
+				<th width="30"><input type="checkbox" group="rateBizs"
+					class="checkboxCtrl">
+				</th>
+				<th width="100">企业组织机构代码</th>
+				<th width="100">企业名称</th>
+				<th width="50">所属行业</th>
+				<th width="100">所属区域</th>
+				<th width="100">收费金额</th>
+				<th width="100">业务发生日期</th>
+				<th width="100">跟踪评级</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><center>抱歉，没有任何记录。</center></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span> <select class="combox" name="numPerPage"
+				onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="1">调整</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<div FWebTable="datainfo"></div>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount=""
+			numPerPage="" pageNumShown="10" currentPage=""></div>
+		<form id="pagerForm" method="post" action="ratingBiz_search.action"
+			name="searchForm">
+			<input type="hidden" name="pageNum" value="1" /> <input
+				type="hidden" name="numPerPage" value="" />
+		</form>
+	</div>
+</div>

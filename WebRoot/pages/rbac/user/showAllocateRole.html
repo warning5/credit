@@ -1,0 +1,77 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="pageContent" >
+	<div style="float: left; display: block; overflow: auto; width: 500px; border: solid 1px #B8D0D6; line-height: 21px; background: #fff">
+			<div class="pageHeader" >
+				<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="userAllocateRole.action" method="post" id="allocateRoleSearchUser" name="allocateRoleSearchUser">
+					<div class="searchBar">
+						<table class="searchContent">
+							<tr>
+								<td>
+									&nbsp;&nbsp;<strong>账户</strong><input name="user.username" value="" type="text" id="user_username"/>
+								</td>
+								<td>
+									&nbsp;&nbsp;<strong>是否禁用</strong>
+												<select id="user_disable" name="user.disable">
+													<option value="false" label="否">否</option>
+													<option value="true" label="是">是</option>
+												</select>
+								</td>
+				                <td>
+				                    <div class="subBar" style="margin-top:0px;">
+				                        <ul style="float:left;">
+				                            <li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+				                        </ul>
+				                    </div>
+				                </td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+			<div class="pageContent" >
+				<table class="table" width="100%" layoutH="90" id="users">
+					<thead>
+						<tr>
+							<th width="50">账号</th>
+							<th width="50">是否禁用</th>
+							<th width="100">描述</th>
+							<th width="50">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+							<tr FWebTable="head"  rel="user.id" target="user.id">
+								<td id="user_username" ></td>
+								<td id="user_disable" ></td>
+								<td id="user_description" ></td>
+								<td>
+									<a target="ajax" href="userAllocateRole_showUserRole.action" class="btnEdit"  rel="showUserRole" >分配</a>
+								</td>
+							</tr>
+					</tbody>
+				</table>
+				<div class="panelBar">
+					<div class="pages" >
+						<span>每页</span>
+						<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})" param="numPerPage">
+							<option value="1">调整</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="200">200</option>
+						</select>
+					</div>
+					<div class="pagination" targetType="navTab" totalCount="" numPerPage="" pageNumShown="10" currentPage=""></div>
+						<form id="pagerForm" method="post" action="userAllocateRole.action" name="allocateRoleSearchUser">
+							<input type="hidden" name="pageNum" value="1" />
+							<input type="hidden" name="numPerPage" value="" />
+						</form>
+				</div>
+			</div>
+	</div>
+
+	<div id="showUserRole" class="unitBox" style="margin-left: 506px;">
+		<!--#include virtual="list1.html" -->
+	</div>
+
+</div>

@@ -1,0 +1,107 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);"
+		action="afterRatingBiz_searchReport.action" method="post"
+		name="searchForm" id="searchForm">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>&nbsp;&nbsp;<strong>评级报告状态：</strong> <select
+						id="biz_valid" name="biz.valid">
+							<option value="1">有效</option>
+							<option value="0">无效</option>
+					</select></td>
+					<td>&nbsp;&nbsp;<strong>评级评价状态：</strong> <select
+						id="biz.hasComment" name="biz.hasComment">
+							<option value="false">无评价</option>
+							<option value="true">有评价</option>
+					</select></td>
+					<td>
+						<div class="subBar">
+							<ul style="float: left;">
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit">查询</button>
+										</div>
+									</div></li>
+								<li><a class="button"
+									href="pages/query/advanceSearchReport.html" target="dialog"
+									mask="true" title="查询框" height="300" width="400"><span>高级检索</span>
+								</a></li>
+							</ul>
+						</div></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" id="add"
+				href="comment_showComment.action?reportId={reportId}" target="dialog"
+				warn="请选择一条记录" width="850" height="550" mask="true" rel="rateBizs"><span>添加评价</span>
+			</a>
+			</li>
+			<li><a class="detail"
+				href="afterRatingBiz_searchReportBrower.action?reportId={reportId}"
+				target="dialog" warn="请选择一条记录" width="850" height="580"
+				rel="rateBizs"><span>浏览</span> </a></li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="112" id="ratingReportBizs">
+		<thead>
+			<tr>
+				<th width="30">序号</th>
+				<th width="30"><input type="checkbox" group="ratingReportBizs"
+					class="checkboxCtrl"></th>
+				<th width="100">评级业务编码</th>
+				<th width="100">被评企业</th>
+				<th width="100">分析师标识</th>
+				<th width="100">信用等级</th>
+				<th width="100">信用等级生效日期</th>
+				<th width="100">信用等级终止日期</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr FWebTable="head" target="reportId" rel="reportId">
+				<td id="squence"></td>
+				<td FWebTable="ids"><input id="reportId"
+					name="ratingReportBizs" type="checkbox"></td>
+				<td id="rateId"></td>
+				<td id="firmCnName"></td>
+				<td id="analystNum"></td>
+				<td id="xyLevel"></td>
+				<td id="xyStartDate"></td>
+				<td id="xyEndDate"></td>
+				<td><a target="dialog" width="850" height="580"
+					href="afterRatingBiz_searchReportBrower.action" class="btnInfo">浏览</a>
+					<a title="添加评价" target="dialog" href="comment_showComment.action" width="850"
+					height="550" class="btnAdd" mask="true">添加评价</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span> <select class="combox" name="numPerPage"
+				onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="1">调整</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<div FWebTable="datainfo"></div>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount=""
+			numPerPage="" pageNumShown="10" currentPage=""></div>
+		<form id="pagerForm" method="post"
+			action="afterRatingBiz_search.action" name="searchForm">
+			<input type="hidden" name="pageNum" value="1" /> <input
+				type="hidden" name="numPerPage" value="" />
+		</form>
+	</div>
+</div>

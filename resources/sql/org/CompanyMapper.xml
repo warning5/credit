@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.credit.org.dao.CompanyMapper">
+	<!-- Function -->
+	<resultMap type="Company" id="companyResultMap">
+		<id property="id" column="companyid" />
+		<result property="name" column="name" />
+		<result property="parent" column="parent]" />
+		<result property="description" column="description" />
+	</resultMap>
+	<resultMap type="java.lang.Integer" id="allRoleCount">
+		<result column="allCount" javaType="java.lang.Integer" />
+	</resultMap>
+	<!-- 获得所有的公司列表 -->
+	<select id="list" resultMap="companyResultMap">
+		SELECT * from rbac_org_company c
+		group by c.companyid
+	</select>
+	<!-- 获得所有的公司列表 -->
+	<select id="listLimit" resultMap="companyResultMap">
+		SELECT * from rbac_org_company
+		c
+		group by c.companyid
+	</select>
+	<!-- 查询公司 -->
+	<select id="searchLimit" resultMap="companyResultMap">
+		select * from rbac_org_company
+		where 1=1 and parent IS NOT NULL
+		<if test="name !=null ">
+			and name LIKE CONCAT(CONCAT('%', #{name}),'%')
+		</if>
+		<if test="parent !=null ">
+			and parent=#{parent}
+		</if>
+	</select>
+	<!-- 查询公司 -->
+	<select id="getByUser" parameterType="String" resultMap="companyResultMap">
+		SELECT
+		oc.* FROM rbac_org_company oc LEFT JOIN credit_org_group og ON
+		oc.companyid=og.orgid left join rbac_sys_user_group ug on
+		ug.groupid=og.groupid WHERE ug.userid=#{userid}
+	</select>
+	<!-- 查询公司类别 -->
+	<select id="listKind" resultMap="companyResultMap">
+		select * from rbac_org_company
+		where 1=1 and parent IS NULL
+	</select>
+	<!-- 获取总数 -->
+	<select id="allCount" resultMap="allRoleCount">
+		select count(1) allCount from rbac_org_company
+		where 1=1
+		<if test="name !=null ">
+			and name LIKE CONCAT(CONCAT('%', #{name}),'%')
+		</if>
+		<if test="parent !=null ">
+			and parent=#{parent}
+		</if>
+	</select>
+	<select id="getByID" parameterType="String" resultMap="companyResultMap">
+		select *
+		from rbac_org_company where companyid = #{companyid}
+	</select>
+
+
+
+	<insert id="add" parameterType="Company">
+		insert into rbac_org_company
+		(companyid,name,parent,description)
+		values(
+		#{id},#{name},#{parent},#{description}
+		)
+	</insert>
+
+	<insert id="allocateGroup" parameterType="Relation">
+		insert into
+		credit_org_group (ogid,orgid,groupid) values
+		(#{id},#{relationPK},#{relationFK})
+	</insert>
+
+	<update id="update" parameterType="Company">
+		update rbac_org_company
+		set
+		name=#{name},description=#{description}
+		where
+		companyid=#{id}
+	</update>
+
+	<!-- 取消机构-组的关联 -->
+	<parameterMap type="map" id="cancelAllocate">
+		<parameter property="relationPK" javaType="java.lang.String" />
+		<parameter property="relationFKs" javaType="java.util.List" />
+	</parameterMap>
+	<delete id="disallocateGroup" parameterMap="cancelAllocate">
+		delete from credit_org_group where orgid=#{relationPK} and groupid in
+		<foreach collection="relationFKs" item="ids" open="("
+			separator="," close=")">
+			#{ids}
+		</foreach>
+	</delete>
+
+	<delete id="delete" parameterType="java.util.List">
+		delete from rbac_org_company where companyid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+</mapper>

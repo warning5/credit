@@ -1,0 +1,25 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="page">
+	<div class="pageContent">
+        <form method="post" action="supervisorManager_editSupervisor.action" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)" id="supervisor" name="supervisor">
+            <div class="pageFormContent" layoutH="58">
+            	<span style="clear: both; display: block; height: 10px;" ></span>
+				
+				<label>机构名称</label>
+				<input id="supervisor_name" class="required" name="supervisor.name" type="text" minlength="2" maxlength="16" value="" />
+				<input type="hidden" name="supervisor.id"  id="supervisor_id" value="" />
+				<span style="clear: both; display: block; height: 10px;" ></span>
+				
+				<label>描述</label>
+				<textarea id="supervisor_description" class="" name="supervisor.description" ></textarea>
+				
+            </div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+					<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+				</ul>
+			</div>
+       </form>
+	</div>
+</div>

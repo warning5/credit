@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.credit.mapper.rate.FirmMapper">
+	<resultMap id="BaseResultMap" type="com.credit.model.rate.Firm">
+		<id column="firmId" jdbcType="VARCHAR" property="firmId" />
+		<result column="firmOrgId" jdbcType="VARCHAR" property="firmOrgId" />
+		<result column="firmCnName" jdbcType="VARCHAR" property="firmCnName" />
+		<result column="firmEnName" jdbcType="VARCHAR" property="firmEnName" />
+		<result column="firmNature" jdbcType="INTEGER" property="firmNature" />
+		<result column="firmRegisAddr" jdbcType="VARCHAR" property="firmRegisAddr" />
+		<result column="firmMunicpPrv" jdbcType="INTEGER" property="firmMunicpPrv" />
+		<result column="firmMunicpCity" jdbcType="INTEGER" property="firmMunicpCity" />
+		<result column="firmMunicpDistr" jdbcType="INTEGER" property="firmMunicpDistr" />
+		<result column="firmPostalAddr" jdbcType="VARCHAR" property="firmPostalAddr" />
+		<result column="firmLegleRepre" jdbcType="VARCHAR" property="firmLegleRepre" />
+		<result column="firmPrincipalName" jdbcType="VARCHAR" property="firmPrincipalName" />
+		<result column="firmContactNumber" jdbcType="VARCHAR" property="firmContactNumber" />
+		<result column="firmFax" jdbcType="VARCHAR" property="firmFax" />
+		<result column="firmRegisType" jdbcType="INTEGER" property="firmRegisType" />
+		<result column="firmRagisNum" jdbcType="VARCHAR" property="firmRagisNum" />
+		<result column="firmRagisDate" jdbcType="DATE" property="firmRagisDate" />
+		<result column="firmBizLicnsExpDate" jdbcType="DATE"
+			property="firmBizLicnsExpDate" />
+		<result column="firmNTaxCertiNum" jdbcType="VARCHAR" property="firmNTaxCertiNum" />
+		<result column="firmLTaxCertiNum" jdbcType="VARCHAR" property="firmLTaxCertiNum" />
+		<result column="firmLoanCardCode" jdbcType="VARCHAR" property="firmLoanCardCode" />
+		<result column="firmIndustryType" jdbcType="VARCHAR" property="firmIndustryType" />
+		<result column="firmWebsite" jdbcType="VARCHAR" property="firmWebsite" />
+		<result column="firmListedLoac" jdbcType="INTEGER" property="firmListedLoac" />
+		<result column="firmListedCode" jdbcType="VARCHAR" property="firmListedCode" />
+		<result column="firmFeature" jdbcType="VARCHAR" property="firmFeature" />
+		<result column="firmCrewSize" jdbcType="INTEGER" property="firmCrewSize" />
+		<result column="firmBizScope" jdbcType="VARCHAR" property="firmBizScope" />
+	</resultMap>
+	<insert id="insert" parameterType="com.credit.model.rate.Firm">
+		insert into firm_base_info
+		(firmId, firmOrgId, firmCnName,
+		firmEnName, firmNature, firmRegisAddr,
+		firmMunicpPrv, firmMunicpCity, firmMunicpDistr,
+		firmPostalAddr,
+		firmLegleRepre, firmPrincipalName,
+		firmContactNumber, firmFax,
+		firmRegisType,
+		firmRagisNum, firmRagisDate, firmBizLicnsExpDate,
+		firmNTaxCertiNum, firmLTaxCertiNum, firmLoanCardCode,
+		firmIndustryType, firmWebsite, firmListedLoac,
+		firmListedCode,
+		firmFeature, firmCrewSize,
+		firmBizScope)
+		values
+		(#{firmId,jdbcType=VARCHAR}, #{firmOrgId,jdbcType=VARCHAR},
+		#{firmCnName,jdbcType=VARCHAR},
+		#{firmEnName,jdbcType=VARCHAR},
+		#{firmNature,jdbcType=INTEGER}, #{firmRegisAddr,jdbcType=VARCHAR},
+		#{firmMunicpPrv,jdbcType=INTEGER}, #{firmMunicpCity,jdbcType=INTEGER},
+		#{firmMunicpDistr,jdbcType=INTEGER},
+		#{firmPostalAddr,jdbcType=VARCHAR},
+		#{firmLegleRepre,jdbcType=VARCHAR},
+		#{firmPrincipalName,jdbcType=VARCHAR},
+		#{firmContactNumber,jdbcType=VARCHAR}, #{firmFax,jdbcType=VARCHAR},
+		#{firmRegisType,jdbcType=INTEGER},
+		#{firmRagisNum,jdbcType=VARCHAR},
+		#{firmRagisDate,jdbcType=DATE}, #{firmBizLicnsExpDate,jdbcType=DATE},
+		#{firmNTaxCertiNum,jdbcType=VARCHAR},
+		#{firmLTaxCertiNum,jdbcType=VARCHAR},
+		#{firmLoanCardCode,jdbcType=VARCHAR},
+		#{firmIndustryType,jdbcType=VARCHAR}, #{firmWebsite,jdbcType=VARCHAR},
+		#{firmListedLoac,jdbcType=INTEGER},
+		#{firmListedCode,jdbcType=VARCHAR}, #{firmFeature,jdbcType=VARCHAR},
+		#{firmCrewSize,jdbcType=INTEGER},
+		#{firmBizScope,jdbcType=VARCHAR})
+	</insert>
+	<delete id="deleteFirms" parameterType="java.util.List">
+		delete from
+		firm_base_info
+		where firmId in
+		<foreach collection="list" item="firmIds" open="(" separator=","
+			close=")">
+			#{firmIds}
+		</foreach>
+	</delete>
+	<update id="updateFirm" parameterType="com.credit.model.rate.Firm"> update
+		firm_base_info set firmOrgId = #{firmOrgId,jdbcType=VARCHAR},
+		firmCnName = #{firmCnName,jdbcType=VARCHAR}, firmEnName =
+		#{firmEnName,jdbcType=VARCHAR}, firmNature =
+		#{firmNature,jdbcType=INTEGER}, firmRegisAddr =
+		#{firmRegisAddr,jdbcType=VARCHAR}, firmMunicpPrv =
+		#{firmMunicpPrv,jdbcType=INTEGER}, firmMunicpCity =
+		#{firmMunicpCity,jdbcType=INTEGER}, firmMunicpDistr =
+		#{firmMunicpDistr,jdbcType=INTEGER}, firmPostalAddr =
+		#{firmPostalAddr,jdbcType=VARCHAR}, firmLegleRepre =
+		#{firmLegleRepre,jdbcType=VARCHAR}, firmPrincipalName =
+		#{firmPrincipalName,jdbcType=VARCHAR}, firmContactNumber =
+		#{firmContactNumber,jdbcType=VARCHAR}, firmFax =
+		#{firmFax,jdbcType=VARCHAR}, firmRegisType =
+		#{firmRegisType,jdbcType=INTEGER}, firmRagisNum =
+		#{firmRagisNum,jdbcType=VARCHAR}, firmRagisDate =
+		#{firmRagisDate,jdbcType=DATE}, firmBizLicnsExpDate =
+		#{firmBizLicnsExpDate,jdbcType=DATE}, firmNTaxCertiNum =
+		#{firmNTaxCertiNum,jdbcType=VARCHAR}, firmLTaxCertiNum =
+		#{firmLTaxCertiNum,jdbcType=VARCHAR}, firmLoanCardCode =
+		#{firmLoanCardCode,jdbcType=VARCHAR}, firmIndustryType =
+		#{firmIndustryType,jdbcType=VARCHAR}, firmWebsite =
+		#{firmWebsite,jdbcType=VARCHAR}, firmListedLoac =
+		#{firmListedLoac,jdbcType=INTEGER}, firmListedCode =
+		#{firmListedCode,jdbcType=VARCHAR}, firmFeature =
+		#{firmFeature,jdbcType=VARCHAR}, firmCrewSize =
+		#{firmCrewSize,jdbcType=INTEGER}, firmBizScope =
+		#{firmBizScope,jdbcType=VARCHAR} where firmId =
+		#{firmId,jdbcType=VARCHAR}
+  </update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select firmId, firmOrgId, firmCnName, firmEnName,
+		firmNature, firmRegisAddr,
+		firmMunicpPrv,
+		firmMunicpCity,
+		firmMunicpDistr, firmPostalAddr, firmLegleRepre, firmPrincipalName,
+		firmContactNumber, firmFax, firmRegisType, firmRagisNum,
+		firmRagisDate, firmBizLicnsExpDate,
+		firmNTaxCertiNum, firmLTaxCertiNum,
+		firmLoanCardCode, firmIndustryType, firmWebsite,
+		firmListedLoac,
+		firmListedCode, firmFeature, firmCrewSize,
+		firmBizScope
+		from
+		firm_base_info
+		where firmId = #{firmId,jdbcType=VARCHAR}
+  </select>
+	<resultMap id="ListFirmMap" type="com.credit.model.rate.ListFirm" />
+	<select id="searchLimit" resultMap="ListFirmMap">
+		select firmId, firmCnName,
+		firmNature, firmRegisAddr, firmMunicpPrv,
+		firmMunicpCity,
+		firmMunicpDistr,firmRagisDate from firm_base_info
+		where
+		1=1
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="firmRagisDate !=null ">
+			and firmRagisDate=#{firmRagisDate}
+		</if>
+		<if test="firmNature !=null and firmNature !=-1">
+			and firmNature=#{firmNature}
+		</if>
+		<if test="firmRegisAddr !=null ">
+			and firmRegisAddr=#{firmRegisAddr}
+		</if>
+		<if test="firmMunicpPrv !=null and firmMunicpPrv !=-1">
+			and firmMunicpPrv=#{firmMunicpPrv}
+		</if>
+		<if test="firmMunicpCity !=null and firmMunicpCity !=-1">
+			and firmMunicpCity=#{firmMunicpCity}
+		</if>
+		<if test="firmMunicpDistr !=null and firmMunicpDistr !=-1">
+			and firmMunicpDistr=#{firmMunicpDistr}
+		</if>
+		<if test="firmListedCode !=null and firmListedCode==0">
+			and firmListedCode is not null and firmListedCode <![CDATA[<>'']]> 
+		</if>
+		<if test="firmListedCode !=null and firmListedCode==1">
+			and (firmListedCode is null or firmListedCode = '') 
+		</if>
+		<if test="firmContactNumber !=null ">
+			and firmContactNumber=#{firmContactNumber}
+		</if>
+		<if test="firmOrgId !=null ">
+			and firmOrgId=#{firmOrgId}
+		</if>
+		<if test="firmLegleRepre !=null">
+			and firmListedCode=#{firmListedCode}
+		</if>
+	</select>
+	<select id="listLimit" resultMap="ListFirmMap">
+		select firmId, firmCnName,
+		firmNature, firmRegisAddr, firmMunicpPrv,
+		firmMunicpCity,
+		firmMunicpDistr,firmRagisDate from firm_base_info
+		where
+		1=1
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="firmRagisDate !=null ">
+			and firmRagisDate=#{firmRagisDate}
+		</if>
+		<if test="firmNature !=null ">
+			and firmNature=#{firmNature}
+		</if>
+		<if test="firmRegisAddr !=null ">
+			and firmRegisAddr=#{firmRegisAddr}
+		</if>
+		<if test="firmMunicpPrv !=null and firmMunicpPrv!=-1">
+			and firmMunicpPrv=#{firmMunicpPrv}
+		</if>
+		<if test="firmMunicpPrv !=null and firmMunicpPrv !=-1">
+			and firmMunicpPrv=#{firmMunicpPrv}
+		</if>
+		<if test="firmMunicpCity !=null and firmMunicpCity !=-1">
+			and firmMunicpCity=#{firmMunicpCity}
+		</if>
+		<if test="firmMunicpDistr !=null and firmMunicpDistr !=-1">
+			and firmMunicpDistr=#{firmMunicpDistr}
+		</if>
+		<if test="firmListedCode !=null and firmListedCode==0">
+			and firmListedCode is not null and firmListedCode <![CDATA[<>'']]> 
+		</if>
+		<if test="firmListedCode !=null and firmListedCode==1">
+			and (firmListedCode is null or firmListedCode = '') 
+		</if>
+		<if test="firmContactNumber !=null ">
+			and firmContactNumber=#{firmContactNumber}
+		</if>
+		<if test="firmOrgId !=null ">
+			and firmOrgId=#{firmOrgId}
+		</if>
+		<if test="firmLegleRepre !=null">
+			and firmListedCode=#{firmListedCode}
+		</if>
+	</select>
+</mapper>

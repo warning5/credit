@@ -1,0 +1,34 @@
+<div class="pageContent">
+	<form method="post" action="afterRatingBiz_searchReport.action"
+		class="pageForm" onsubmit="return navTabSearch(this);"
+		name="searchForm" id="searchForm">
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>信用等级生效日期：</label> <input type="text" name="biz.xyStartDate"
+					class="date required" size="30" dateFmt="yyyy-MM-dd HH:mm:ss" /><a
+					class="inputDateButton" href="javascript:;">选择</a>
+			</div>
+			<div class="unit">
+				<label>信用等级终止日期：</label> <input name="biz.xyEndDate" type="text"
+					class="date required" size="30" dateFmt="yyyy-MM-dd HH:mm:ss" /><a
+					class="inputDateButton" href="javascript:;">选择</a>
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive">
+						<div class="buttonContent">
+							<button type="submit">开始检索</button>
+						</div>
+					</div>
+				</li>
+				<li><div class="button">
+						<div class="buttonContent">
+							<button type="reset">清空重输</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

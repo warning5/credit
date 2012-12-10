@@ -1,0 +1,48 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+	$("#commentsPanel").find("a").each(function(i){
+		$(this).bind("click",function(){
+			var parent=$(this).attr("commentParent");
+			$("#comment_commentParent").val(parent);
+			$("#label_comment_type").text("回复内容");
+			var cancel=$("#cancelReport");
+			cancel.show();
+			cancel.unbind( "click" ).bind("click",function(){
+				$(this).hide();
+				$("#label_comment_type").text("评价内容");
+				$("#comment_commentParent").val("");
+			});
+		});
+	});
+});
+//-->
+</script>
+<div class="page">
+	<div class="pageContent">
+		<div class="pageFormContent" layoutH="30">
+			<div  style="display: block; overflow: auto;" id="commentsPanel" layoutH="140">
+			</div>
+			<div  style="border:1px #B8D0D6 solid">
+				<form method="post" action="comment_addComment.action" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)" name="comment"  id="comment">
+		            <div class="pageFormContent" >
+						<input id="comment_rateReptId" name="comment.rateReptId" type="hidden" value="" size="50"/>
+						<input id="comment_commentOrgId" name="comment.commentOrgId" type="hidden" value="" />
+						<input id="comment_commentParent" name="comment.commentParent" type="hidden" value="" />
+		                
+						<label id="label_comment_type">评价内容</label>
+						<textarea id="comment_commentContent" class="required"  minlength="1" maxlength="255" name="comment.commentContent"  cols="100" ></textarea>
+		            </div>
+					<div class="formBar">
+						<ul>
+							<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+							<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+							<li id="cancelReport" style="display: none"><div  class="button"><div class="buttonContent"><button type="button" >撤销回复</button></div></div></li>
+						</ul>
+					</div>
+		       </form>
+		     </div>
+		</div>
+	</div>
+</div>

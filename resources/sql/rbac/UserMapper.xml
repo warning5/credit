@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.credit.rbac.dao.UserMapper">
+	<resultMap type="User" id="userResultMap">
+		<id property="id" column="userid" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="disable" column="disable" />
+		<result property="description" column="description" />
+	</resultMap>
+
+	<resultMap type="java.lang.Integer" id="allUserCount">
+		<result column="allCount" javaType="java.lang.Integer" />
+	</resultMap>
+	<!-- 根据用户名查询用户信息 -->
+	<select id="getByUsername" parameterType="String" resultMap="userResultMap">
+		select *
+		from rbac_sys_user where username = #{username}
+	</select>
+	<!-- 根据id查询用户信息 -->
+	<select id="getByID" parameterType="String" resultMap="userResultMap">
+		select *
+		from rbac_sys_user where userid = #{userid}
+	</select>
+	<!-- 获取所有的用户 -->
+	<select id="listLimit" resultMap="userResultMap">
+		select * from rbac_sys_user
+	</select>
+	<!-- 查询用户 -->
+	<select id="searchLimit" resultMap="userResultMap">
+		select * from rbac_sys_user
+		where 1=1
+		<if test="username !=null ">
+			and username LIKE CONCAT(CONCAT('%', #{username}),'%')
+		</if>
+		and disable=#{disable}
+	</select>
+	<!-- 获取总数 -->
+	<select id="allCount" resultMap="allUserCount">
+		select count(1) allCount from
+		rbac_sys_user where 1=1 
+		<if test="username !=null ">
+			and username LIKE CONCAT(CONCAT('%', #{username}),'%')
+		</if>
+			and disable=#{disable}
+	</select>
+
+	<!-- 添加用户 -->
+	<insert id="add" parameterType="User">
+		insert into rbac_sys_user
+		(userid,username,password,disable,description)
+		values(
+		#{id},#{username},#{password},#{disable},#{description}
+		)
+	</insert>
+
+	<!-- 批量分配角色/组 -->
+	<insert id="allocateRole" parameterType="Relation">
+		insert into rbac_sys_user_role (urid,userid,roleid) values
+			(#{id},#{relationPK},#{relationFK})
+	</insert>
+	<insert id="allocateGroup" parameterType="Relation" >
+		insert into rbac_sys_user_group (ugid,userid,groupid) values
+		(#{id},#{relationPK},#{relationFK})
+	</insert>
+
+	<!-- 修改用户 -->
+	<update id="update" parameterType="User">
+		update rbac_sys_user
+		set
+		password=#{password},disable=#{disable},description=#{description}
+		where userid=#{id}
+	</update>
+	<parameterMap type="map" id="batchUser">
+		<parameter property="disable" javaType="java.lang.Boolean" />
+		<parameter property="ids" javaType="java.util.List" />
+	</parameterMap>
+	<!-- 禁用/解禁用户 -->
+	<update id="batchUpdate" parameterMap="batchUser">
+		update rbac_sys_user set
+		disable=#{disable}
+		where userid in
+		<foreach collection="ids" open="(" close=")" item="ids"
+			separator=",">
+			#{ids}
+		</foreach>
+	</update>
+
+	<!-- 删除用户-组的关联 -->
+	<delete id="deleteUserGroup" parameterType="java.util.List">
+		delete from rbac_sys_user_group where userid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 取消用户-组的关联 -->
+	<delete id="disallocateGroup" parameterMap="cancelAllocate">
+		delete from rbac_sys_user_group where userid =#{relationPK} and groupid in
+		<foreach collection="relationFKs" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 删除用户-角色的关联 -->
+	<delete id="deleteUserRole" parameterType="java.util.List">
+		delete from rbac_sys_user_role where userid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 取消用户-角色的关联 -->
+	<parameterMap type="map" id="cancelAllocate">
+		<parameter property="relationPK" javaType="java.lang.String" />
+		<parameter property="relationFKs" javaType="java.util.List" />
+	</parameterMap>
+	<delete id="disallocateRole" parameterMap="cancelAllocate">
+		delete from rbac_sys_user_role where userid =#{relationPK} and roleid in
+		<foreach collection="relationFKs" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 删除用户 -->
+	<delete id="delete" parameterType="java.util.List">
+		delete from rbac_sys_user where userid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+</mapper>

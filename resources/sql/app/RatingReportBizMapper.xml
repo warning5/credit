@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.credit.mapper.rate.RatingReportBizMapper">
+	<resultMap id="BaseResultMap" type="RatingReportBiz" />
+	<delete id="deleteRatingReportBizs" parameterType="java.util.List">
+		delete from credit_ratingreport where reportGlobalId in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<insert id="insert" parameterType="RatingReportBiz">
+		insert into
+		credit_ratingreport (reportGlobalId, reportId, reportType,
+		xyLevel,
+		xySuggestion, xyProspect,
+		xyOutDate, xyStartDate, xyEndDate,
+		xyRevokeDate, xyChangeDate, reportDigestSummary,
+		reportDigestRisk,
+		reportScanFile, analystNum,
+		entAssetsTotal,
+		rateId,firmId,agcId,
+		entLoanBalance,state)
+		values (#{reportGlobalId,jdbcType=VARCHAR},
+		#{reportId,jdbcType=VARCHAR},
+		#{reportType,jdbcType=VARCHAR},
+		#{xyLevel,jdbcType=VARCHAR}, #{xySuggestion,jdbcType=VARCHAR},
+		#{xyProspect,jdbcType=VARCHAR},
+		#{xyOutDate,jdbcType=TIMESTAMP},
+		#{xyStartDate,jdbcType=TIMESTAMP},
+		#{xyEndDate,jdbcType=TIMESTAMP},
+		#{xyRevokeDate,jdbcType=TIMESTAMP},
+		#{xyChangeDate,jdbcType=TIMESTAMP},
+		#{reportDigestSummary,jdbcType=VARCHAR},
+		#{reportDigestRisk,jdbcType=VARCHAR},
+		#{reportScanFile,jdbcType=VARCHAR}, #{analystNum,jdbcType=VARCHAR},
+		#{entAssetsTotal,jdbcType=DOUBLE},
+		#{rateId,jdbcType=VARCHAR},
+		#{firmId,jdbcType=VARCHAR},
+		#{agcId,jdbcType=VARCHAR},
+		#{entLoanBalance,jdbcType=DOUBLE},
+		#{state,jdbcType=INTEGER})
+	</insert>
+	<update id="update" parameterType="RatingReportBiz">
+		update credit_ratingreport
+		set
+		reportId = #{reportId,jdbcType=VARCHAR},
+		reportType =
+		#{reportType,jdbcType=VARCHAR},
+		xyLevel = #{xyLevel,jdbcType=VARCHAR},
+		xySuggestion = #{xySuggestion,jdbcType=VARCHAR},
+		xyProspect =
+		#{xyProspect,jdbcType=VARCHAR},
+		xyOutDate =
+		#{xyOutDate,jdbcType=TIMESTAMP},
+		xyStartDate =
+		#{xyStartDate,jdbcType=TIMESTAMP},
+		xyEndDate =
+		#{xyEndDate,jdbcType=TIMESTAMP},
+		xyRevokeDate =
+		#{xyRevokeDate,jdbcType=TIMESTAMP},
+		xyChangeDate =
+		#{xyChangeDate,jdbcType=TIMESTAMP},
+		reportDigestSummary =
+		#{reportDigestSummary,jdbcType=VARCHAR},
+		reportDigestRisk =
+		#{reportDigestRisk,jdbcType=VARCHAR},
+		reportScanFile =
+		#{reportScanFile,jdbcType=VARCHAR},
+		analystNum =
+		#{analystNum,jdbcType=VARCHAR},
+		entAssetsTotal =
+		#{entAssetsTotal,jdbcType=DOUBLE},
+		rateId = #{rateId,jdbcType=VARCHAR},
+		firmId = #{firmId,jdbcType=VARCHAR},
+		agcId = #{agcId,jdbcType=VARCHAR},
+		state = #{state,jdbcType=INTEGER},
+		entLoanBalance =
+		#{entLoanBalance,jdbcType=DOUBLE}
+		where reportGlobalId
+		=
+		#{reportGlobalId,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select reportGlobalId, reportId, reportType, xyLevel,
+		xySuggestion,
+		xyProspect, xyOutDate,
+		xyStartDate, xyEndDate,
+		xyRevokeDate, xyChangeDate, reportDigestSummary,
+		reportDigestRisk,
+		reportScanFile, analystNum, entAssetsTotal, rateId,firmId,agcId,
+		entLoanBalance,state
+		from
+		credit_ratingreport
+		where reportGlobalId =
+		#{reportGlobalId,jdbcType=VARCHAR}
+	</select>
+	<resultMap id="ListRatingReportBizMap" type="ListRatingReportBiz" />
+	<select id="searchLimit" resultMap="ListRatingReportBizMap">
+		SELECT
+		reportGlobalId,
+		a.rateId,
+		a.reportId,
+		firmCnName,
+		xyLevel,
+		analystNum,
+		xyStartDate,
+		xyEndDate
+		FROM credit_ratingreport AS a
+		JOIN
+		firm_base_info AS b
+		ON a.firmId = b.firmId where 1=1
+		<if test="states!=null">
+			and a.state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+			</foreach>
+		</if>
+		<if test="state !=null ">
+			and a.state=#{state}
+		</if>
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="analystNum !=null ">
+			and analystNum=#{analystNum}
+		</if>
+		<if test="xyLevel !=null ">
+			and xyLevel=#{xyLevel}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="valid!=null">
+			<if test="valid==1">
+				and (now() between xyStartDate and xyEndDate)
+			</if>
+			<if test="valid==0">
+				and (now() not between xyStartDate and xyEndDate)
+			</if>
+		</if>
+		<if test="xyStartDate!=null and xyEndDate!=null">
+			and <![CDATA[#{xyStartDate}<=xyStartDate and #{xyEndDate}>=xyEndDate]]>
+		</if>
+		order by state
+	</select>
+	<select id="searchLimitWithComment" resultMap="ListRatingReportBizMap">
+		SELECT
+		reportGlobalId,
+		a.rateId,
+		a.reportId,
+		firmCnName,
+		xyLevel,
+		analystNum,
+		xyStartDate,
+		xyEndDate
+		FROM credit_ratingreport AS a
+		JOIN
+		firm_base_info AS b
+		ON a.firmId = b.firmId where 1=1
+		<if test="states!=null">
+			and a.state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+			</foreach>
+		</if>
+		<if test="state !=null ">
+			and a.state=#{state}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="valid!=null">
+			<if test="valid==1">
+				and (now() between xyStartDate and xyEndDate)
+			</if>
+			<if test="valid==0">
+				and (now() not between xyStartDate and xyEndDate)
+			</if>
+		</if>
+		<if test="xyStartDate!=null and xyEndDate!=null">
+			and <![CDATA[#{xyStartDate}<=xyStartDate and #{xyEndDate}>=xyEndDate]]>
+		</if>
+		<if test="hasComment">
+			AND a.reportGlobalId IN(SELECT
+			DISTINCT ci.rateReptId AS
+			reportGlobalId
+			FROM comments_info ci
+			WHERE 1 = 1
+			ORDER BY
+			ci.commentTime)
+		</if>
+		<if test="!hasComment">
+			AND a.reportGlobalId NOT IN(SELECT
+			DISTINCT ci.rateReptId
+			AS
+			reportGlobalId
+			FROM comments_info ci
+			WHERE 1 = 1
+			ORDER BY
+			ci.commentTime)
+		</if>
+		order by a.state
+	</select>
+	<update id="uploadReport" parameterType="StateChangeModel">
+		update
+		credit_ratingreport
+		set
+		state = #{state,jdbcType=INTEGER},
+		submitRatingBizTime=#{changeDate}
+		where reportGlobalId =
+		#{rateId,jdbcType=VARCHAR}
+	</update>
+	<update id="approve" parameterType="StateChangeModel">
+		update
+		credit_ratingreport
+		set
+		state = #{state,jdbcType=INTEGER},
+		handledRatingBizTime=#{changeDate}
+		where reportGlobalId =
+		#{rateId,jdbcType=VARCHAR}
+	</update>
+	<update id="back" parameterType="com.credit.actions.rate.HandleBizBean">
+		update
+		credit_ratingreport
+		set
+		state =
+		#{state,jdbcType=INTEGER},
+		handledRatingBizTime=#{changeDate},
+		backReason=#{backReason}
+		where reportGlobalId =
+		#{rateId,jdbcType=VARCHAR}
+	</update>
+	<resultMap type="java.lang.Integer" id="allCount" />
+	<select id="allCountWithComment" resultMap="allCount">
+		SELECT
+		count(reportGlobalId)
+		FROM credit_ratingreport AS a
+		JOIN
+		firm_base_info AS b
+		ON a.firmId = b.firmId where 1=1
+		<if test="states!=null">
+			and a.state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+			</foreach>
+		</if>
+		<if test="state !=null ">
+			and a.state=#{state}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="valid!=null">
+			<if test="valid==1">
+				and (now() between xyStartDate and xyEndDate)
+			</if>
+			<if test="valid==0">
+				and (now() not between xyStartDate and xyEndDate)
+			</if>
+		</if>
+		<if test="xyStartDate!=null and xyEndDate!=null">
+			and <![CDATA[#{xyStartDate}<=xyStartDate and #{xyEndDate}>=xyEndDate]]>
+		</if>
+		<if test="hasComment">
+			AND a.reportGlobalId IN(SELECT
+			DISTINCT ci.rateReptId AS
+			reportGlobalId
+			FROM comments_info ci
+			WHERE 1 = 1
+			ORDER BY
+			ci.commentTime)
+		</if>
+		<if test="!hasComment">
+			AND a.reportGlobalId NOT IN(SELECT
+			DISTINCT ci.rateReptId
+			AS
+			reportGlobalId
+			FROM comments_info ci
+			WHERE 1 = 1
+			ORDER BY
+			ci.commentTime)
+		</if>
+	</select>
+	<select id="allCount" resultMap="allCount">
+		SELECT
+		count(reportGlobalId)
+		FROM credit_ratingreport AS a
+		JOIN
+		firm_base_info AS b
+		ON a.firmId = b.firmId
+		where 1=1
+		<if test="states!=null">
+			and a.state in
+			<foreach collection="states" item="state" open="(" separator=","
+				close=")">
+				#{state}
+			</foreach>
+		</if>
+		<if test="state !=null ">
+			and a.state=#{state}
+		</if>
+		<if test="firmCnName !=null ">
+			and firmCnName LIKE CONCAT(CONCAT('%', #{firmCnName}),'%')
+		</if>
+		<if test="analystNum !=null ">
+			and analystNum=#{analystNum}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+		<if test="valid!=null">
+			<if test="valid==1">
+				and (now() between xyStartDate and xyEndDate)
+			</if>
+			<if test="valid==0">
+				and (now() not between xyStartDate and xyEndDate)
+			</if>
+		</if>
+		<if test="xyLevel !=null ">
+			and xyLevel=#{xyLevel}
+		</if>
+		<if test="xyStartDate!=null and xyEndDate!=null">
+			and <![CDATA[#{xyStartDate}<=xyStartDate and #{xyEndDate}>=xyEndDate]]>
+		</if>
+	</select>
+</mapper>

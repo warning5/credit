@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.credit.mapper.rate.AgcFinacialMapper">
+	<insert id="insert" parameterType="com.credit.model.rate.AgcFinacial">
+		insert into agc_finacial_data
+		(agcFinaceId, agcId, agcOrgId,
+		agcRptYear, agcTotalAssets,
+		agcMoneyFunds,
+		agcFixedAssets, agcOwnerRights, agcUndisProfits,
+		agcTotalRatIncm, agcRatIncm, agcBorVentRatIncm,
+		agcGuaraRatIncm,
+		agcFinancRatIncm, agcTBoundsRatIncm,
+		agcStrctFinancRatIncm,
+		agcSBndRatIncm, agcMainBizCost,
+		agcMainBizProfit, agcFinaExpense,
+		agcAdmExpense,
+		agcBizTaxAndAnn, agcTotalProfit, agcIncmTax,
+		agcNetProfit, agcAccFirmName, agcAccFirmOpin,agcCnName
+		)
+		values
+		(#{agcFinaceId,jdbcType=VARCHAR}, #{agcId,jdbcType=VARCHAR},
+		#{agcOrgId,jdbcType=VARCHAR},
+		#{agcRptYear,jdbcType=INTEGER},
+		#{agcTotalAssets,jdbcType=DOUBLE}, #{agcMoneyFunds,jdbcType=DOUBLE},
+		#{agcFixedAssets,jdbcType=DOUBLE}, #{agcOwnerRights,jdbcType=DOUBLE},
+		#{agcUndisProfits,jdbcType=DOUBLE},
+		#{agcTotalRatIncm,jdbcType=DOUBLE}, #{agcRatIncm,jdbcType=DOUBLE},
+		#{agcBorVentRatIncm,jdbcType=DOUBLE},
+		#{agcGuaraRatIncm,jdbcType=DOUBLE},
+		#{agcFinancRatIncm,jdbcType=DOUBLE},
+		#{agcTBoundsRatIncm,jdbcType=DOUBLE},
+		#{agcStrctFinancRatIncm,jdbcType=DOUBLE},
+		#{agcSBndRatIncm,jdbcType=DOUBLE}, #{agcMainBizCost,jdbcType=DOUBLE},
+		#{agcMainBizProfit,jdbcType=DOUBLE},
+		#{agcFinaExpense,jdbcType=DOUBLE}, #{agcAdmExpense,jdbcType=DOUBLE},
+		#{agcBizTaxAndAnn,jdbcType=DOUBLE}, #{agcTotalProfit,jdbcType=DOUBLE},
+		#{agcIncmTax,jdbcType=DOUBLE},
+		#{agcNetProfit,jdbcType=DOUBLE},
+		#{agcAccFirmName,jdbcType=VARCHAR},
+		#{agcAccFirmOpin,jdbcType=VARCHAR},
+		#{agcCnName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<delete id="deleteAgcFinacials" parameterType="java.util.List">
+		delete from
+		agc_finacial_data
+		where agcFinaceId in
+		<foreach collection="list" item="agcFinacialIds" open="("
+			separator="," close=")">
+			#{agcFinacialIds}
+		</foreach>
+	</delete>
+	<update id="updateAgcFinacial" parameterType="com.credit.model.rate.AgcFinacial">
+		update
+		agc_finacial_data
+		set agcId = #{agcId,jdbcType=VARCHAR},
+		agcOrgId =
+		#{agcOrgId,jdbcType=VARCHAR},
+		agcRptYear =
+		#{agcRptYear,jdbcType=INTEGER},
+		agcTotalAssets =
+		#{agcTotalAssets,jdbcType=DOUBLE},
+		agcMoneyFunds =
+		#{agcMoneyFunds,jdbcType=DOUBLE},
+		agcFixedAssets =
+		#{agcFixedAssets,jdbcType=DOUBLE},
+		agcOwnerRights =
+		#{agcOwnerRights,jdbcType=DOUBLE},
+		agcUndisProfits =
+		#{agcUndisProfits,jdbcType=DOUBLE},
+		agcTotalRatIncm =
+		#{agcTotalRatIncm,jdbcType=DOUBLE},
+		agcRatIncm =
+		#{agcRatIncm,jdbcType=DOUBLE},
+		agcBorVentRatIncm =
+		#{agcBorVentRatIncm,jdbcType=DOUBLE},
+		agcGuaraRatIncm =
+		#{agcGuaraRatIncm,jdbcType=DOUBLE},
+		agcFinancRatIncm =
+		#{agcFinancRatIncm,jdbcType=DOUBLE},
+		agcTBoundsRatIncm =
+		#{agcTBoundsRatIncm,jdbcType=DOUBLE},
+		agcStrctFinancRatIncm =
+		#{agcStrctFinancRatIncm,jdbcType=DOUBLE},
+		agcSBndRatIncm =
+		#{agcSBndRatIncm,jdbcType=DOUBLE},
+		agcMainBizCost =
+		#{agcMainBizCost,jdbcType=DOUBLE},
+		agcMainBizProfit =
+		#{agcMainBizProfit,jdbcType=DOUBLE},
+		agcFinaExpense =
+		#{agcFinaExpense,jdbcType=DOUBLE},
+		agcAdmExpense =
+		#{agcAdmExpense,jdbcType=DOUBLE},
+		agcBizTaxAndAnn =
+		#{agcBizTaxAndAnn,jdbcType=DOUBLE},
+		agcTotalProfit =
+		#{agcTotalProfit,jdbcType=DOUBLE},
+		agcIncmTax =
+		#{agcIncmTax,jdbcType=DOUBLE},
+		agcNetProfit =
+		#{agcNetProfit,jdbcType=DOUBLE},
+		agcAccFirmName =
+		#{agcAccFirmName,jdbcType=VARCHAR},
+		agcAccFirmOpin =
+		#{agcAccFirmOpin,jdbcType=VARCHAR},
+		agcCnName =
+		#{agcCnName,jdbcType=VARCHAR}
+		where agcFinaceId =
+		#{agcFinaceId,jdbcType=VARCHAR}
+  </update>
+	<resultMap type="com.credit.model.rate.AgcFinacial" id="AgcFinacialMap"></resultMap>
+	<select id="selectByPrimaryKey" resultMap="AgcFinacialMap"
+		parameterType="java.lang.Integer">
+		select agcFinaceId, agcId, agcOrgId, agcRptYear,
+		agcTotalAssets,
+		agcMoneyFunds, agcFixedAssets,
+		agcOwnerRights,
+		agcUndisProfits, agcTotalRatIncm, agcRatIncm, agcBorVentRatIncm,
+		agcGuaraRatIncm, agcFinancRatIncm, agcTBoundsRatIncm,
+		agcStrctFinancRatIncm, agcSBndRatIncm,
+		agcMainBizCost,
+		agcMainBizProfit, agcFinaExpense, agcAdmExpense, agcBizTaxAndAnn,
+		agcTotalProfit, agcIncmTax, agcNetProfit, agcAccFirmName,
+		agcAccFirmOpin,agcCnName
+		from agc_finacial_data
+		where agcFinaceId =
+		#{agcFinaceId,jdbcType=VARCHAR}
+  </select>
+	<resultMap type="com.credit.model.rate.ListAgcFinacial" id="ListAgcFinacialMap" />
+	<select id="searchLimit" resultMap="ListAgcFinacialMap">
+		select
+		agcCnName,agcFinaceId,agcOrgId,
+		agcRptYear,agcRatIncm,agcId
+		from
+		agc_finacial_data
+		where
+		1=1
+		<if test="agcCnName !=null ">
+			and agcCnName LIKE CONCAT(CONCAT('%', #{agcCnName}),'%')
+		</if>
+		<if test="agcRptYear !=null ">
+			and agcRptYear=#{agcRptYear}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+	</select>
+	<resultMap type="java.lang.Integer" id="allCount" />
+	<select id="allCount" resultMap="allCount">
+		select
+		count(agcFinaceId)
+		from
+		agc_finacial_data
+		where
+		1=1
+		<if test="agcCnName !=null ">
+			and agcCnName LIKE CONCAT(CONCAT('%', #{agcCnName}),'%')
+		</if>
+		<if test="agcRptYear !=null ">
+			and agcRptYear=#{agcRptYear}
+		</if>
+		<if test="agcId !=null ">
+			and agcId=#{agcId}
+		</if>
+	</select>
+</mapper>

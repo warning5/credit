@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.credit.mapper.rate.ReportCommentMapper">
+	<delete id="delete" parameterType="java.lang.String">
+		delete from
+		comments_info
+		where
+		commentId = #{commentId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="add" parameterType="ReportComment">
+		insert into comments_info
+		(commentId, rateReptId, commentContent,
+		commentTime, commentParent,
+		commentOrgId)
+		values
+		(#{id,jdbcType=VARCHAR},
+		#{rateReptId,jdbcType=VARCHAR},
+		#{commentContent,jdbcType=VARCHAR},
+		#{commentTime,jdbcType=TIMESTAMP},
+		#{commentParent,jdbcType=VARCHAR},
+		#{commentOrgId,jdbcType=VARCHAR})
+	</insert>
+	<update id="update" parameterType="ReportComment">
+		update
+		comments_info
+		set
+		rateReptId = #{rateReptId,jdbcType=VARCHAR},
+		commentContent =
+		#{commentContent,jdbcType=VARCHAR},
+		commentTime =
+		#{commentTime,jdbcType=TIMESTAMP},
+		commentParent =
+		#{commentParent,jdbcType=VARCHAR},
+		commentOrgId =
+		#{commentOrgId,jdbcType=VARCHAR}
+		where commentId =
+		#{id,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select commentId, rateReptId, commentContent,
+		commentTime, commentParent,
+		commentOrgId
+		from
+		comments_info
+		where
+		commentId = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<resultMap id="BaseResultMap" type="ReportComment">
+		<id column="commentId" property="id" jdbcType="VARCHAR" />
+		<result column="rateReptId" property="rateReptId" jdbcType="VARCHAR" />
+		<result column="commentContent" property="commentContent"
+			jdbcType="VARCHAR" />
+		<result column="commentTime" property="commentTime" jdbcType="TIMESTAMP" />
+		<result column="commentParent" property="commentParent"
+			jdbcType="VARCHAR" />
+		<result column="commentOrgId" property="commentOrgId" jdbcType="VARCHAR" />
+		<collection property="children" ofType="ReportComment"
+			column="{rateReptId=rateReptId,commentId=commentId}" select="selectCommentChild" />
+	</resultMap>
+
+	<select id="selectByReportId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT ci.*,roc.name commentOrgType FROM comments_info
+		ci LEFT JOIN rbac_org_company roc ON ci.commentOrgId=roc.companyid
+		WHERE 1=1
+		and ci.rateReptId = #{rateReptId,jdbcType=VARCHAR}
+		and
+		ci.commentParent is null ORDER BY ci.commentTime
+	</select>
+	<select id="selectCommentChild" resultMap="BaseResultMap">
+		SELECT ci.*,roc.name
+		commentOrgType FROM comments_info
+		ci LEFT JOIN rbac_org_company roc ON
+		ci.commentOrgId=roc.companyid
+		WHERE 1=1
+		and ci.rateReptId =
+		#{rateReptId,jdbcType=VARCHAR}
+		and
+		ci.commentParent =#{commentId} ORDER
+		BY ci.commentTime
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT ci.*,roc.name
+		commentOrgType FROM comments_info
+		ci LEFT JOIN rbac_org_company roc ON
+		ci.commentOrgId=roc.companyid
+		WHERE 1=1 ORDER BY ci.commentTime
+	</select>
+</mapper>

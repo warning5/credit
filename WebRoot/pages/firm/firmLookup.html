@@ -1,0 +1,100 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#keyword").attr("name",$("#searchType").val()); 
+	$("#searchType").click(function(){
+		if($("#searchType").find("option:selected").val()=="listFirm.firmRagisDate"){
+			$("#keyword1").removeAttr("style");
+			$("#keyword").attr("style","display: none;");
+			$("#keyword1").attr("name",$("#searchType").find("option:selected").val()); 
+		}else{
+			$("#keyword1").attr("style","display: none;");
+			$("#keyword").removeAttr("style");
+		 	$("#keyword").attr("name",$("#searchType").find("option:selected").val()); 
+		}
+	});
+	});
+
+</script>
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return dialogSearch(this);"
+		action="firm_lookup.action" method="get" name="searchForm" id="searchForm">
+		<div class="searchBar">
+
+			<table class="searchContent">
+				<tr>
+					<td>&nbsp;&nbsp;<strong>关键词：</strong><input name="keyword"
+						type="text" id="keyword" />
+						<input name="keyword" type="text" id="keyword1" class="date" style="display: none;"/>	
+					</td>
+					<td><select id="searchType" name="searchType">
+							<option value="listFirm.firmCnName">企业名称</option>
+							<option value="listFirm.firmRagisDate">注册时间</option>
+					</select>
+					</td>
+					<td>
+						<div class="subBar" style="margin-top: 0px;">
+							<ul style="float: left;">
+								<li><div class="buttonActive">
+										<div class="buttonContent">
+											<button type="submit">查询</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="112" id="firmsLookup">
+		<thead>
+			<tr>
+				<th width="30">序号</th>
+				<th width="100">企业ID</th>
+				<th width="100">企业名称</th>
+				<th width="50">所属行业</th>
+				<th width="120">所属区域</th>
+				<th width="100">注册时间</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr FWebTable="head">
+				<td id="squence"></td>
+				<td id="firmId"></td>
+				<td id="firmCnName"></td>
+				<td id="firmNature"></td>
+				<td id="firmRegion"></td>
+				<td id="firmRagisDate"></td>
+				<td>
+					<a onclick="javascript:$.bringBack({id:'1', firmCnName:$(this).parents('tr').find('#firmCnName').text(), firmId:$(this).parents('tr').find('#firmId').text()})"  href="javascript:void(0);" class="btnSelect" title="企业列表">选择</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页</span> 			
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				<option value="1">调整</option>
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<div FWebTable="datainfo"></div>
+		</div>
+
+		<div class="pagination" targetType="navTab" totalCount=""
+			numPerPage="" pageNumShown="10" currentPage=""></div>
+		<form id="pagerForm" method="post" action="firm_lookup.action"
+			name="searchForm">
+			<input type="hidden" name="pageNum" value="1" /> <input
+				type="hidden" name="numPerPage" value="" />
+		</form>
+	</div>
+</div>

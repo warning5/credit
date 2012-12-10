@@ -1,0 +1,33 @@
+<script type='text/javascript' src='fweb/core/fweb-core.js'></script>
+<div class="page">
+	<div class="pageContent">
+        <form method="post" action="roleManager_editRole.action" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)" id="role" name="role">
+            <div class="pageFormContent" layoutH="58">
+            	<span style="clear: both; display: block; height: 10px;" ></span>
+				
+				<label>角色名称</label>
+				<input id="role_name" class="required" name="role.name" type="text" minlength="2" maxlength="16" value="" />
+				<input type="hidden" name="role.id"  id="role_id" value="" />
+				<span style="clear: both; display: block; height: 10px;" ></span>
+				
+                <label for="role_disable">是否禁用</label>
+                <select name="role.disable"  class="required combox"  id="role_disable">
+					<option value="false" label="否">否</option>
+					<option value="true" label="是">是</option>
+				</select>
+                
+                <span style="clear: both; display: block; height: 10px;" ></span>
+                
+				<label>描述</label>
+				<textarea id="role_description" class="" name="role.description" ></textarea>
+				
+            </div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+					<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+				</ul>
+			</div>
+       </form>
+	</div>
+</div>

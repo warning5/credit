@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.credit.rbac.dao.GroupMapper">
+	<resultMap type="Group" id="groupResultMap">
+		<id property="id" column="groupid" />
+		<result property="name" column="name" />
+		<result property="disable" column="disable" />
+		<result property="description" column="description" />
+	</resultMap>
+	<resultMap type="java.lang.Integer" id="allGroupCount">
+		<result column="allCount" javaType="java.lang.Integer"/>
+	</resultMap>
+	
+	<select id="getByUser" parameterType="String" resultMap="groupResultMap">
+		SELECT
+		g.* FROM rbac_sys_group g LEFT JOIN rbac_sys_user_group ug ON
+		g.groupid=ug.groupid WHERE ug.userid = #{userid}
+	</select>
+	<select id="getByRole" parameterType="String" resultMap="groupResultMap">
+		SELECT
+		g.* FROM rbac_sys_group g LEFT JOIN rbac_sys_role_group rg ON
+		g.groupid=rg.groupid WHERE rg.roleid = #{roleid}
+	</select>
+	<select id="getByCompany" parameterType="String" resultMap="groupResultMap">
+		SELECT
+		g.* FROM rbac_sys_group g LEFT JOIN credit_org_group og ON
+		g.groupid=og.groupid WHERE og.orgid = #{companyid}
+	</select>
+	<!-- 根据id查询组信息 -->
+	<select id="getByID" parameterType="String" resultMap="groupResultMap">
+		select *
+		from rbac_sys_group where groupid = #{groupid}
+	</select>
+	<!-- 获取所有的组信息 -->
+	<select id="listLimit" resultMap="groupResultMap">
+		select * from rbac_sys_group
+	</select>
+	<!-- 获取所有的组信息 -->
+	<select id="list" resultMap="groupResultMap">
+		select * from rbac_sys_group
+	</select>
+	<!-- 查询组 -->
+	<select id="searchLimit" resultMap="groupResultMap">
+		select * from rbac_sys_group
+		where 1=1
+		<if test="name !=null ">
+			and name LIKE CONCAT(CONCAT('%', #{name}),'%')
+		</if>
+		and disable=#{disable}
+	</select>
+	<!-- 获取总数 -->
+	<select id="allCount" resultMap="allGroupCount">
+		select count(1) allCount from rbac_sys_group
+		where 1=1
+		<if test="name !=null ">
+			and name LIKE CONCAT(CONCAT('%', #{name}),'%')
+		</if>
+			and disable=#{disable}
+	</select>
+	
+	<!-- 添加组 -->
+	<insert id="add" parameterType="Group">
+		insert into rbac_sys_group
+		(groupid,name,disable,description)
+		values(
+		#{id},#{name},#{disable},#{description}
+		)
+	</insert>
+	
+	<!-- 修改组 -->
+	<update id="update" parameterType="Group" >
+		update rbac_sys_group set
+		name=#{name},disable=#{disable},description=#{description}
+		where groupid=#{id}
+	</update>
+	<parameterMap type="map" id="batchGroup">
+		<parameter property="disable" javaType="java.lang.Boolean"/>
+		<parameter property="ids" javaType="java.util.List"/>
+	</parameterMap>
+	<!-- 禁用/解禁组 -->
+	<update id="batchUpdate" parameterMap="batchGroup">
+		update rbac_sys_group set
+		disable=#{disable}
+		where groupid in
+		<foreach collection="ids" open="(" close=")" item="ids" separator=",">
+			#{ids}
+		</foreach>
+	</update>
+	
+	<!-- 删除组-角色的关联 -->
+	<delete id="deleteGroupRole" parameterType="java.util.List">
+		delete from rbac_sys_role_group where groupid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 删除组-用户的关联 -->
+	<delete id="deleteGroupUser" parameterType="java.util.List">
+		delete from rbac_sys_user_group where groupid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 删除组-机构的关联 -->
+	<delete id="deleteGroupOrg" parameterType="java.util.List">
+		delete from credit_org_group where groupid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+	<!-- 删除组 -->
+	<delete id="delete" parameterType="java.util.List">
+		delete from rbac_sys_group where groupid in
+		<foreach collection="list" item="ids" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
+</mapper>
